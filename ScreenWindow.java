@@ -96,14 +96,14 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		imgBuffer = this.createImage(this.getWidth(), this.getHeight());
 		Graphics2D g2 = (Graphics2D)imgBuffer.getGraphics();
 		
-		g2.setColor(Color.BLUE);
+		//background color
+		g2.setColor(Color.white);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 				
-			g2.setColor(Color.black);
-			Font font = new Font("Callibri", Font.PLAIN, (int)((3.0/44.0)*(double)this.getWidth()));
-		
-			g2.setFont(font);
-			g2.drawString("SCS", (int)((this.getWidth() - font.getStringBounds("SCS", g2.getFontRenderContext()).getWidth())/2), 125 + font.getSize()-75);
+			//g2.setColor(Color.black);
+			//Font font = new Font("Callibri", Font.PLAIN, (int)((3.0/44.0)*(double)this.getWidth()));
+			//g2.setFont(font);
+			//g2.drawString("SCS", (int)((this.getWidth() - font.getStringBounds("SCS", g2.getFontRenderContext()).getWidth())/2), 125 + font.getSize()-75);
 			
 			for(int i = 0; i < listTraj.size(); i++)
 			{
