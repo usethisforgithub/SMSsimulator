@@ -6,27 +6,33 @@ public class Trajectory {
 
 	private Coordinate vertex;
 	private int direction;
-	private final int size = 100;
+	private int sizeT;
 	
-	public Trajectory(Coordinate v, int dir)
+	public Trajectory(Coordinate v, int dir, int s)
 	{
 		vertex = v;
 		direction = dir;
+		sizeT = s;
 	}
 	
-	private Coordinate getVertex()
+	public Coordinate getVertex()
 	{
 		return vertex;
 	}
 	
-	private int getDirection()
+	public int getDirection()
 	{
 		return direction;
+	}
+	
+	public int getSize()
+	{
+		return sizeT;
 	}
 	
 	public void draw(Graphics2D g2)
 	{
 		g2.setColor(Color.red);
-		g2.draw(new Ellipse2D.Double(vertex.geti() - size / 2, vertex.getj() - size / 2, size, size));
+		g2.draw(new Ellipse2D.Double(vertex.geti() - sizeT / 2, vertex.getj() - sizeT / 2, sizeT, sizeT));
 	}
 }

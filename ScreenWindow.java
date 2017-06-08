@@ -34,12 +34,33 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	
 	
 	public ScreenWindow(){
+		
 		super();
+		int lastDir;
+		double ang;
+		//makes list of trajectories
 		for(int i = 1; i <= m; i++){
+			if(i %2 ==0){
+				lastDir = 1;
+				ang = (Math.PI)/2;
+			}else{
+				lastDir = -1;
+				ang = (3*Math.PI)/2;
+			}
 			for(int j = 1; j <= n; j++ ){
-				listTraj.add(new Trajectory(new Coordinate(i*100,j*100),1));
+				if(lastDir == -1){
+					lastDir = 1;
+				}else{
+					lastDir = -1;
+				}
+				Trajectory temp = new Trajectory(new Coordinate(j*200,i*200),lastDir, 200);
+				listTraj.add(temp);
+				listBot.add(new Robot(lastDir,temp, ang));
 			}
 		}
+		
+		//makes list of robots
+		
 		
 		this.addWindowListener(this);
 		this.addKeyListener(this);
@@ -87,6 +108,9 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			for(int i = 0; i < listTraj.size(); i++)
 			{
 				listTraj.get(i).draw(g2);
+			}
+			for(int i = 0; i < listBot.size(); i++){
+				listBot.get(i).draw(g2);
 			}
 			
 			
