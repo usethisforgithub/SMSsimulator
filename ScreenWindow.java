@@ -6,6 +6,7 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private Image imgBuffer;
 	private ArrayList<Trajectory> listTraj = new ArrayList<Trajectory>();
 	private ArrayList<Robot> listBot = new ArrayList<Robot>();
+	
+	
 	
 	int m = 4;
 	int n = 5;
@@ -72,7 +75,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		this.setVisible(true);
 		imgBuffer = this.createImage(1100, 748);
 		this.setMinimumSize(new Dimension(500,500));
-	
+		this.setResizable(false);
 	}
 	
 	public void run(){
@@ -95,7 +98,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	public void draw(){
 		imgBuffer = this.createImage(this.getWidth(), this.getHeight());
 		Graphics2D g2 = (Graphics2D)imgBuffer.getGraphics();
-		
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//background color
 		g2.setColor(Color.white);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
