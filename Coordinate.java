@@ -10,12 +10,12 @@ public class Coordinate {
 		this.j = j;
 	}
 	
-	private int geti()
+	public int geti()
 	{
 		return i;
 	}
 	
-	private int getj()
+	public int getj()
 	{
 		return j;
 	}

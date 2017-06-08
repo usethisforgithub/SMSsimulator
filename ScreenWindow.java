@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -25,20 +26,32 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	//public static String TITLE = "New Window";
 	private boolean isRunning,isDone;
 	private Image imgBuffer;
+	private ArrayList<Trajectory> listTraj = new ArrayList<Trajectory>();
+	private ArrayList<Robot> listBot = new ArrayList<Robot>();
+	
+	int m = 4;
+	int n = 5;
 	
 	
 	public ScreenWindow(){
 		super();
+		for(int i = 1; i <= m; i++){
+			for(int j = 1; j <= n; j++ ){
+				listTraj.add(new Trajectory(new Coordinate(i*100,j*100),1));
+			}
+		}
+		
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		this.addMouseListener(this);
 		this.setSize(1100,748);
-		this.setTitle("SMS");
+		this.setTitle("SCS");
 		isRunning = true;
 		isDone = false;
 		this.setVisible(true);
 		imgBuffer = this.createImage(1100, 748);
 		this.setMinimumSize(new Dimension(500,500));
+	
 	}
 	
 	public void run(){
@@ -64,17 +77,17 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		g2.setColor(Color.BLUE);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-		
-		//g2.setColor(Color.red);
-		//g2.drawRect(0, 0, 50, 50);
-		
+				
 			g2.setColor(Color.black);
 			Font font = new Font("Callibri", Font.PLAIN, (int)((3.0/44.0)*(double)this.getWidth()));
 		
 			g2.setFont(font);
-			g2.drawString("SMS", (int)((this.getWidth() - font.getStringBounds("SMS", g2.getFontRenderContext()).getWidth())/2), 125 + font.getSize()-75);
+			g2.drawString("SCS", (int)((this.getWidth() - font.getStringBounds("SCS", g2.getFontRenderContext()).getWidth())/2), 125 + font.getSize()-75);
 			
-			
+			for(int i = 0; i < listTraj.size(); i++)
+			{
+				listTraj.get(i).draw(g2);
+			}
 			
 			
 			
