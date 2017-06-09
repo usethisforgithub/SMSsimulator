@@ -35,7 +35,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private int numRows;
 	private int numCol;
 	private double ang;
-	private int lastDir;
+	private int tempDir;
+	private int colDir;
 	
 	
 	public ScreenWindow(int r, int c, int d, double a){
@@ -43,34 +44,54 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		numRows = r;
 		numCol = c;
 		ang = a;
-		lastDir = d;
+		tempDir = d;
 		double tempAng = ang;
-		int tempDir = -100;
+		
 		
 		
 		//makes list of trajectories
 		for(int i = 1; i <= numRows; i++){
+			System.out.println("top of i loop");
+			System.out.println("i: " + i);
+			System.out.println("tempDir: " + tempDir);
 			
 			if(i %2 ==0){
-				tempDir = lastDir;
-				tempAng = ang;
-			}else{
-				if(tempDir == 1){
+				if(d == 1){
 					tempDir = -1;
 				}else{
 					tempDir=1;
 				}
-				tempAng = ang + Math.PI;
+				tempAng = ang + Math.PI;;
+			}else{
+				tempDir = d;
+				tempAng = ang;
 			}
+			colDir = tempDir;
 			for(int j = 1; j <= numCol; j++ ){
-				if(lastDir == -1){
-					lastDir = 1;
+				
+				System.out.println("top of j loop");
+				System.out.println("i: " + i);
+				System.out.println("j: " + j);
+				System.out.println("tempDir: " + tempDir);
+				
+				if(j%2 == 0){
+				if(tempDir == -1){
+					tempDir = 1;
 				}else{
-					lastDir = -1;
+					tempDir = -1;
+				}
+				}else{
+					tempDir = colDir;
 				}
 				Trajectory temp = new Trajectory(new Coordinate(j*200,i*200),tempDir, 200);
 				listTraj.add(temp);
-				listBot.add(new Robot(lastDir,temp, tempAng));
+				listBot.add(new Robot(tempDir,temp, tempAng));
+				
+				System.out.println("bottom of j loop");
+				System.out.println("i: " + i);
+				System.out.println("j: " + j);
+				System.out.println("tempDir: " + tempDir);
+				
 			}
 		}
 		
