@@ -37,6 +37,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private double ang;
 	private int tempDir;
 	private int colDir;
+	private double colAng;
 	
 	
 	public ScreenWindow(int r, int c, int d, double a){
@@ -58,11 +59,12 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				}else{
 					tempDir=1;
 				}
-				tempAng = ang + Math.PI;;
+				tempAng = 2*Math.PI-ang;
 			}else{
 				tempDir = d;
 				tempAng = ang;
 			}
+			colAng = tempAng;
 			colDir = tempDir;
 			for(int j = 1; j <= numCol; j++ ){
 				
@@ -72,8 +74,10 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				}else{
 					tempDir = -1;
 				}
+				tempAng = Math.PI - colAng;
 				}else{
 					tempDir = colDir;
+					tempAng = colAng;
 				}
 				Trajectory temp = new Trajectory(new Coordinate(j*200,i*200),tempDir, 200);
 				listTraj.add(temp);
