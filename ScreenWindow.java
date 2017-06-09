@@ -51,10 +51,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		//makes list of trajectories
 		for(int i = 1; i <= numRows; i++){
-			System.out.println("top of i loop");
-			System.out.println("i: " + i);
-			System.out.println("tempDir: " + tempDir);
-			
+
 			if(i %2 ==0){
 				if(d == 1){
 					tempDir = -1;
@@ -69,11 +66,6 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			colDir = tempDir;
 			for(int j = 1; j <= numCol; j++ ){
 				
-				System.out.println("top of j loop");
-				System.out.println("i: " + i);
-				System.out.println("j: " + j);
-				System.out.println("tempDir: " + tempDir);
-				
 				if(j%2 == 0){
 				if(tempDir == -1){
 					tempDir = 1;
@@ -87,10 +79,6 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				listTraj.add(temp);
 				listBot.add(new Robot(tempDir,temp, tempAng));
 				
-				System.out.println("bottom of j loop");
-				System.out.println("i: " + i);
-				System.out.println("j: " + j);
-				System.out.println("tempDir: " + tempDir);
 				
 			}
 		}
