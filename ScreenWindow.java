@@ -32,33 +32,45 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	
 	
 	
-	int m = 4;
-	int n = 5;
+	private int numRows;
+	private int numCol;
+	private double ang;
+	private int lastDir;
 	
 	
-	public ScreenWindow(){
-		
+	public ScreenWindow(int r, int c, int d, double a){
 		super();
-		int lastDir;
-		double ang;
+		numRows = r;
+		numCol = c;
+		ang = a;
+		lastDir = d;
+		double tempAng = ang;
+		int tempDir = -100;
+		
+		
 		//makes list of trajectories
-		for(int i = 1; i <= m; i++){
+		for(int i = 1; i <= numRows; i++){
+			
 			if(i %2 ==0){
-				lastDir = 1;
-				ang = (Math.PI)/2;
+				tempDir = lastDir;
+				tempAng = ang;
 			}else{
-				lastDir = -1;
-				ang = (3*Math.PI)/2;
+				if(tempDir == 1){
+					tempDir = -1;
+				}else{
+					tempDir=1;
+				}
+				tempAng = ang + Math.PI;
 			}
-			for(int j = 1; j <= n; j++ ){
+			for(int j = 1; j <= numCol; j++ ){
 				if(lastDir == -1){
 					lastDir = 1;
 				}else{
 					lastDir = -1;
 				}
-				Trajectory temp = new Trajectory(new Coordinate(j*200,i*200),lastDir, 200);
+				Trajectory temp = new Trajectory(new Coordinate(j*200,i*200),tempDir, 200);
 				listTraj.add(temp);
-				listBot.add(new Robot(lastDir,temp, ang));
+				listBot.add(new Robot(lastDir,temp, tempAng));
 			}
 		}
 		
