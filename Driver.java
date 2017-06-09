@@ -43,7 +43,7 @@ public static void main(String[] args)
 	int r = Integer.parseInt(aField.getText());
 	int c = Integer.parseInt(bField.getText());
 	int d = Integer.parseInt(cField.getText());
-	double a = Integer.parseInt(dField.getText());
+	double a = Double.parseDouble(dField.getText());
 
 	ScreenWindow window = new ScreenWindow(r,c,d,a);
 	new Thread(window).start();
