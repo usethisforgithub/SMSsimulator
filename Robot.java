@@ -5,27 +5,26 @@ import java.awt.geom.Ellipse2D;
 
 public class Robot {
 
-	private int direction;
+	
 	private Trajectory t;
 	private double angle;
 	private int sizeR;
 	
-	public Robot(int dir, Trajectory traj, double ang)
+	public Robot( Trajectory traj, double ang)
 	{
-		direction = dir;
+		
 		t = traj;
 		angle = ang;
 		sizeR = t.getSize()/5;
 	}
 	
-	public int getDirection()
-	{
-		return direction;
-	}
-	
 	public Trajectory getTraj()
 	{
 		return t;
+	}
+	
+	public void setAngle(double a){
+		angle = a;
 	}
 	
 	public double getAngle()

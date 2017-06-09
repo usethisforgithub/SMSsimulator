@@ -92,7 +92,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				}
 				Trajectory temp = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-10);
 				listTraj.add(temp);
-				listBot.add(new Robot(tempDir,temp, tempAng));
+				listBot.add(new Robot(temp, tempAng));
 				
 				
 			}
@@ -121,6 +121,20 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			
 			
 			draw();
+			for(Robot e : listBot){
+				if(e.getTraj().getDirection() == -1){
+					e.setAngle(e.getAngle()+(Math.PI/32));
+				}else{
+					e.setAngle(e.getAngle()-(Math.PI/32));
+				}
+				
+			}
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			try{
 				Thread.sleep(10);
 				}catch(InterruptedException ie){
