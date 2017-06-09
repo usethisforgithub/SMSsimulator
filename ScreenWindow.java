@@ -29,7 +29,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private Image imgBuffer;
 	private ArrayList<Trajectory> listTraj = new ArrayList<Trajectory>();
 	private ArrayList<Robot> listBot = new ArrayList<Robot>();
-	
+	private boolean paused;
 	
 	//used to make trajectories
 	private int numRows;
@@ -45,6 +45,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		super();
 		
 		//user inputs
+		paused = false;
 		numRows = r;
 		numCol = c;
 		ang = a;
@@ -104,23 +105,27 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		this.addMouseListener(this);
-		this.setSize(800,800);
+		this.setSize(800,900);
 		this.setTitle("SCS");
 		isRunning = true;
 		isDone = false;
 		this.setVisible(true);
-		imgBuffer = this.createImage(800, 800);
+		imgBuffer = this.createImage(800, 900);
 		//this.setMinimumSize(new Dimension(500,500));
 		this.setResizable(false);
 	}
 	
 	public void run(){
 		while(isRunning){
-			
-			
-			
-			
 			draw();
+			
+			//checks for close drones
+			for(Robot e : listBot){
+				
+			}
+			
+			
+			if(!paused){
 			for(Robot e : listBot){
 				if(e.getTraj().getDirection() == -1){
 					e.setAngle(e.getAngle()+(Math.PI/32));
@@ -134,7 +139,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			}}
 			try{
 				Thread.sleep(10);
 				}catch(InterruptedException ie){
@@ -166,7 +171,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				listBot.get(i).draw(g2);
 			}
 			
-			
+			g2.setColor(Color.gray);
+			g2.fillRect(370, 820, 60, 60);
 			
 		
 		g2 = (Graphics2D)this.getGraphics();
@@ -274,7 +280,9 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		if((arg0.getX() >= 370 && arg0.getX() <= 430) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
+			paused = !paused;
+		}
 		
 		
 	}
