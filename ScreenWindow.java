@@ -31,23 +31,34 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private ArrayList<Robot> listBot = new ArrayList<Robot>();
 	
 	
-	
+	//used to make trajectories
 	private int numRows;
 	private int numCol;
 	private double ang;
 	private int tempDir;
 	private int colDir;
 	private double colAng;
-	
+	private double tempAng = ang;
+	private int trajSize; 
 	
 	public ScreenWindow(int r, int c, int d, double a){
 		super();
+		
+		//user inputs
 		numRows = r;
 		numCol = c;
 		ang = a;
 		tempDir = d;
-		double tempAng = ang;
 		
+		
+		int horCircle = 700/numCol;
+		int vertCircle = 700/numRows;
+		
+		if(horCircle > vertCircle){
+			trajSize = vertCircle;
+		}else{
+			trajSize = horCircle;
+		}
 		
 		
 		//makes list of trajectories
@@ -79,7 +90,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					tempDir = colDir;
 					tempAng = colAng;
 				}
-				Trajectory temp = new Trajectory(new Coordinate(j*200,i*200),tempDir, 200);
+				Trajectory temp = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-10);
 				listTraj.add(temp);
 				listBot.add(new Robot(tempDir,temp, tempAng));
 				
@@ -93,13 +104,13 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		this.addMouseListener(this);
-		this.setSize(1100,748);
+		this.setSize(800,800);
 		this.setTitle("SCS");
 		isRunning = true;
 		isDone = false;
 		this.setVisible(true);
-		imgBuffer = this.createImage(1100, 748);
-		this.setMinimumSize(new Dimension(500,500));
+		imgBuffer = this.createImage(800, 800);
+		//this.setMinimumSize(new Dimension(500,500));
 		this.setResizable(false);
 	}
 	

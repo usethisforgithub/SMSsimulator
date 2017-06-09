@@ -8,13 +8,14 @@ public class Robot {
 	private int direction;
 	private Trajectory t;
 	private double angle;
-	public final int sizeR = 20;
+	private int sizeR;
 	
 	public Robot(int dir, Trajectory traj, double ang)
 	{
 		direction = dir;
 		t = traj;
 		angle = ang;
+		sizeR = t.getSize()/5;
 	}
 	
 	public int getDirection()
