@@ -22,11 +22,11 @@ import java.util.ArrayList;
 
 public class ScreenWindow extends Frame implements WindowListener, Runnable, KeyListener, MouseListener{
 
-	//public static final Dimension SIZE = new Dimension(1100,748);
-	//private Frame frame;
-	//public static String TITLE = "New Window";
+	//window stuff
 	private boolean isRunning,isDone;
 	private Image imgBuffer;
+	
+	
 	private ArrayList<Trajectory> listTraj = new ArrayList<Trajectory>();
 	private ArrayList<Robot> listBot = new ArrayList<Robot>();
 	private boolean paused;
@@ -45,16 +45,15 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		super();
 		
 		//user inputs
-		paused = false;
+		paused = true;
 		numRows = r;
 		numCol = c;
 		ang = a;
 		tempDir = d;
 		
-		
+		//resizing code
 		int horCircle = 700/numCol;
 		int vertCircle = 700/numRows;
-		
 		if(horCircle > vertCircle){
 			trajSize = vertCircle;
 		}else{
@@ -62,7 +61,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		}
 		
 		
-		//makes list of trajectories
+		//makes list of trajectories and robots
 		for(int i = 1; i <= numRows; i++){
 
 			if(i %2 ==0){
@@ -91,17 +90,41 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					tempDir = colDir;
 					tempAng = colAng;
 				}
-				Trajectory temp = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-10);
-				listTraj.add(temp);
-				listBot.add(new Robot(temp, tempAng));
+				Trajectory tempTraj = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-10);
+				Robot tempBot = new Robot(tempTraj, tempAng);
+				listTraj.add(tempTraj);
+				listBot.add(tempBot);
+				tempTraj.addBot(tempBot);
 				
 				
 			}
 		}
 		
-		//makes list of robots
+		//tries to add neighbors
+		for(Trajectory e : listTraj){
+			for(Trajectory f : listTraj){
+				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()-1){
+					System.out.println("got herer");
+					e.addTop(f);
+				}
+				if(f.getVertex().geti() == e.getVertex().geti()+1 && f.getVertex().getj() == e.getVertex().getj()){
+					e.addRight(f);
+				}
+				if(f.getVertex().geti() == e.getVertex().geti()-11 && f.getVertex().getj() == e.getVertex().getj()){
+					e.addLeft(f);
+					System.out.println("it worked");
+				}
+				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()-1){
+					e.addTop(f);
+				}
+				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()+1){
+					e.addBottom(f);
+				}
+			}
+		}
 		
 		
+		//more window stuff
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		this.addMouseListener(this);
@@ -111,35 +134,50 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		isDone = false;
 		this.setVisible(true);
 		imgBuffer = this.createImage(800, 900);
-		//this.setMinimumSize(new Dimension(500,500));
 		this.setResizable(false);
+		
 	}
 	
 	public void run(){
 		while(isRunning){
 			draw();
 			
-			//checks for close drones
+			//sets drones to sensing if they are at a critical point
 			for(Robot e : listBot){
-				
+				boolean missingNeighbor = false;
+				//if at sensing angle
+				if(Utilities.radianEq(e.getAngle(), 2*Math.PI) || Utilities.radianEq(e.getAngle(), Math.PI/2)  || Utilities.radianEq(e.getAngle(),Math.PI )|| Utilities.radianEq(e.getAngle(),3*(Math.PI/2))|| Utilities.radianEq(e.getAngle(), -Math.PI/2)  || Utilities.radianEq(e.getAngle(),-Math.PI )|| Utilities.radianEq(e.getAngle(),-3*(Math.PI/2))||Utilities.radianEq(e.getAngle(), -2*Math.PI)){
+					e.setSensing(true);
+					
+					//if drone is at left position
+					if( Utilities.radianEq(e.getAngle(),Math.PI )||  Utilities.radianEq(e.getAngle(),-Math.PI )){
+						
+						if(e.getTraj().getLeft() != null &&(!e.getTraj().getLeft().hasRightCrit())){
+							e.setTrajectory(e.getTraj().getLeft());
+							e.setAngle(e.getAngle()+Math.PI);
+						}
+					}
+					
+					
+				}else{
+					e.setSensing(false);
+				}
 			}
+			
 			
 			
 			if(!paused){
 			for(Robot e : listBot){
 				if(e.getTraj().getDirection() == -1){
-					e.setAngle(e.getAngle()+(Math.PI/32));
+					e.setAngle(e.getAngle()+(Math.PI/64));
 				}else{
-					e.setAngle(e.getAngle()-(Math.PI/32));
+					e.setAngle(e.getAngle()-(Math.PI/64));
 				}
+				e.setAngle(Utilities.coterminal(e.getAngle()));
 				
 			}
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}}
+			
+			}
 			try{
 				Thread.sleep(10);
 				}catch(InterruptedException ie){
@@ -158,19 +196,18 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		g2.setColor(Color.white);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 				
-			//g2.setColor(Color.black);
-			//Font font = new Font("Callibri", Font.PLAIN, (int)((3.0/44.0)*(double)this.getWidth()));
-			//g2.setFont(font);
-			//g2.drawString("SCS", (int)((this.getWidth() - font.getStringBounds("SCS", g2.getFontRenderContext()).getWidth())/2), 125 + font.getSize()-75);
-			
+			//draws trajectories
 			for(int i = 0; i < listTraj.size(); i++)
 			{
 				listTraj.get(i).draw(g2);
 			}
+			
+			//draws robots
 			for(int i = 0; i < listBot.size(); i++){
 				listBot.get(i).draw(g2);
 			}
 			
+			//draws button
 			g2.setColor(Color.gray);
 			g2.fillRect(370, 820, 60, 60);
 			
@@ -280,10 +317,18 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
+		
+		//if click is inside the button, toggles pause
 		if((arg0.getX() >= 370 && arg0.getX() <= 430) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
 			paused = !paused;
 		}
 		
+		for(int i = 0; i < listBot.size(); i++){
+			if(listBot.get(i).contains(new Coordinate(arg0.getX(), arg0.getY()))){
+				listBot.get(i).getTraj().removeBot(listBot.get(i));
+				listBot.remove(i);
+			}
+		}
 		
 	}
 

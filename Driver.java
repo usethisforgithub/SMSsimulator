@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 public class Driver {
 public static void main(String[] args)
 {
-	
+	//stuff for the dialog box
 	JTextField aField = new JTextField(5);
     JTextField bField = new JTextField(5);
     JTextField cField = new JTextField(5);
