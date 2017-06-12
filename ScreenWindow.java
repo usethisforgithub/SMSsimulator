@@ -40,9 +40,13 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private double colAng;
 	private double tempAng = ang;
 	private int trajSize; 
+	private ArrayList<Arc> allArcs;
+	
 	
 	public ScreenWindow(int r, int c, int d, double a){
 		super();
+		
+		imgBuffer = this.createImage(800, 900);
 		
 		//user inputs
 		paused = true;
@@ -90,7 +94,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					tempDir = colDir;
 					tempAng = colAng;
 				}
-				Trajectory tempTraj = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-10);
+				Trajectory tempTraj = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-4);
 				Robot tempBot = new Robot(tempTraj, tempAng);
 				listTraj.add(tempTraj);
 				listBot.add(tempBot);
@@ -102,8 +106,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		//adds neighbors
 		for(Trajectory e : listTraj){
-			System.out.println("x: " + e.getVertex().geti());
-			System.out.println("y: " + e.getVertex().getj());
+			
 			for(Trajectory f : listTraj){
 				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()-trajSize){
 					e.addTop(f);
@@ -123,8 +126,18 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			}
 		}
 		
-		//diagnostic
 		
+		allArcs = new ArrayList<Arc>();
+		for(Trajectory e : listTraj){
+			allArcs.add(new Arc(e,1));
+			allArcs.add(new Arc(e,2));
+			allArcs.add(new Arc(e,3));
+			allArcs.add(new Arc(e,4));
+		}
+		
+		for(Arc e : allArcs){
+			
+		}
 		
 		
 		//more window stuff
@@ -136,7 +149,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		isRunning = true;
 		isDone = false;
 		this.setVisible(true);
-		imgBuffer = this.createImage(800, 900);
+		
 		this.setResizable(false);
 		
 	}

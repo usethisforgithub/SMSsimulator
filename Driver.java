@@ -40,6 +40,12 @@ public static void main(String[] args)
     if (result == JOptionPane.OK_OPTION) {
     }
     
+   // String temp1 = aField.getText();
+  //  String temp2 = bField.getText();
+  //  String temp3 = cField.getText();
+  //  String temp4 = dField.getText();
+    
+   // if(r)
 	int r = Integer.parseInt(aField.getText());
 	int c = Integer.parseInt(bField.getText());
 	int d = Integer.parseInt(cField.getText());

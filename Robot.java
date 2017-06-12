@@ -9,6 +9,7 @@ public class Robot {
 	private Trajectory t;
 	private double angle;
 	private int sizeR;
+	private int id;
 	
 	
 	public Robot( Trajectory traj, double ang)
