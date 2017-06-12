@@ -100,28 +100,31 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			}
 		}
 		
-		//tries to add neighbors
+		//adds neighbors
 		for(Trajectory e : listTraj){
+			System.out.println("x: " + e.getVertex().geti());
+			System.out.println("y: " + e.getVertex().getj());
 			for(Trajectory f : listTraj){
-				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()-1){
-					System.out.println("got herer");
+				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()-trajSize){
 					e.addTop(f);
 				}
-				if(f.getVertex().geti() == e.getVertex().geti()+1 && f.getVertex().getj() == e.getVertex().getj()){
+				if(f.getVertex().geti() == e.getVertex().geti()+trajSize && f.getVertex().getj() == e.getVertex().getj()){
 					e.addRight(f);
 				}
-				if(f.getVertex().geti() == e.getVertex().geti()-11 && f.getVertex().getj() == e.getVertex().getj()){
+				if(f.getVertex().geti() == e.getVertex().geti()-trajSize && f.getVertex().getj() == e.getVertex().getj()){
 					e.addLeft(f);
-					System.out.println("it worked");
 				}
-				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()-1){
+				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()-trajSize){
 					e.addTop(f);
 				}
-				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()+1){
+				if(f.getVertex().geti() == e.getVertex().geti() && f.getVertex().getj() == e.getVertex().getj()+trajSize){
 					e.addBottom(f);
 				}
 			}
 		}
+		
+		//diagnostic
+		
 		
 		
 		//more window stuff
@@ -144,7 +147,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			
 			//sets drones to sensing if they are at a critical point
 			for(Robot e : listBot){
-				boolean missingNeighbor = false;
+				
 				//if at sensing angle
 				if(Utilities.radianEq(e.getAngle(), 2*Math.PI) || Utilities.radianEq(e.getAngle(), Math.PI/2)  || Utilities.radianEq(e.getAngle(),Math.PI )|| Utilities.radianEq(e.getAngle(),3*(Math.PI/2))|| Utilities.radianEq(e.getAngle(), -Math.PI/2)  || Utilities.radianEq(e.getAngle(),-Math.PI )|| Utilities.radianEq(e.getAngle(),-3*(Math.PI/2))||Utilities.radianEq(e.getAngle(), -2*Math.PI)){
 					e.setSensing(true);
@@ -152,10 +155,16 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					//if drone is at left position
 					if( Utilities.radianEq(e.getAngle(),Math.PI )||  Utilities.radianEq(e.getAngle(),-Math.PI )){
 						
+						//if no drone to the left
 						if(e.getTraj().getLeft() != null &&(!e.getTraj().getLeft().hasRightCrit())){
 							e.setTrajectory(e.getTraj().getLeft());
 							e.setAngle(e.getAngle()+Math.PI);
 						}
+						//if no drone to the right
+						//if(e.getTraj().getRight() != null &&(!e.getTraj().getRight().hasLeftCrit())){
+						//	e.setTrajectory(e.getTraj().getRight());
+						//	e.setAngle(e.getAngle()+Math.PI);
+						//}
 					}
 					
 					
