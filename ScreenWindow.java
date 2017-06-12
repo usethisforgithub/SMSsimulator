@@ -151,20 +151,26 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				//if at sensing angle
 				if(Utilities.radianEq(e.getAngle(), 2*Math.PI) || Utilities.radianEq(e.getAngle(), Math.PI/2)  || Utilities.radianEq(e.getAngle(),Math.PI )|| Utilities.radianEq(e.getAngle(),3*(Math.PI/2))|| Utilities.radianEq(e.getAngle(), -Math.PI/2)  || Utilities.radianEq(e.getAngle(),-Math.PI )|| Utilities.radianEq(e.getAngle(),-3*(Math.PI/2))||Utilities.radianEq(e.getAngle(), -2*Math.PI)){
 					e.setSensing(true);
-					
 					//if drone is at left position
-					if( Utilities.radianEq(e.getAngle(),Math.PI )||  Utilities.radianEq(e.getAngle(),-Math.PI )){
-						
+					if( Utilities.radianEq(e.getAngle(),Math.PI ) ||  Utilities.radianEq(e.getAngle(),-Math.PI )){
 						//if no drone to the left
 						if(e.getTraj().getLeft() != null &&(!e.getTraj().getLeft().hasRightCrit())){
+							e.getTraj().removeBot(e);
 							e.setTrajectory(e.getTraj().getLeft());
-							e.setAngle(e.getAngle()+Math.PI);
+							e.getTraj().addBot(e);
+							e.setAngle(e.getAngle()+Math.PI - 2*e.getAngle());
 						}
+						
+					}
+					//if drone is at right
+					if( Utilities.radianEq(e.getAngle(),2*Math.PI ) ||  Utilities.radianEq(e.getAngle(),-2*Math.PI  )||  Utilities.radianEq(e.getAngle(),0 )){
 						//if no drone to the right
-						//if(e.getTraj().getRight() != null &&(!e.getTraj().getRight().hasLeftCrit())){
-						//	e.setTrajectory(e.getTraj().getRight());
-						//	e.setAngle(e.getAngle()+Math.PI);
-						//}
+						if(e.getTraj().getRight() != null &&(!e.getTraj().getRight().hasLeftCrit())){
+							e.getTraj().removeBot(e);
+							e.setTrajectory(e.getTraj().getRight());
+							e.getTraj().addBot(e);
+							e.setAngle(e.getAngle()+Math.PI-2*e.getAngle());
+						}
 					}
 					
 					
@@ -178,9 +184,9 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			if(!paused){
 			for(Robot e : listBot){
 				if(e.getTraj().getDirection() == -1){
-					e.setAngle(e.getAngle()+(Math.PI/64));
+					e.setAngle(e.getAngle()+(Math.PI/128));
 				}else{
-					e.setAngle(e.getAngle()-(Math.PI/64));
+					e.setAngle(e.getAngle()-(Math.PI/128));
 				}
 				e.setAngle(Utilities.coterminal(e.getAngle()));
 				

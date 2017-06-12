@@ -38,7 +38,7 @@ public class Trajectory {
 	
 	public boolean hasRightCrit(){
 		for(Robot e : bots){
-			if(Utilities.radianEq(e.getAngle(), 2*Math.PI) ||Utilities.radianEq(e.getAngle(), -2*Math.PI)){
+			if(Utilities.radianEq(e.getAngle(), 2*Math.PI) ||Utilities.radianEq(e.getAngle(), -2*Math.PI)||Utilities.radianEq(e.getAngle(), 0)){
 				return true;
 			}
 		}

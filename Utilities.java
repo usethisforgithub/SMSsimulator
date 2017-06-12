@@ -3,7 +3,7 @@ public class Utilities {
 	
 	public static boolean radianEq(double a, double b){
 		
-		double prox = .4;
+		double prox = .2;
 		if(Math.abs(a - b) <= prox || Math.abs(a - (b+2*Math.PI)) <= prox){
 			return true;
 		}
