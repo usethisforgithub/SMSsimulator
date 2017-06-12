@@ -218,9 +218,9 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			if(!paused){
 			for(Robot e : listBot){
 				if(e.getTraj().getDirection() == -1){
-					e.setAngle(e.getAngle()+(Math.PI/128));
+					e.setAngle(e.getAngle()+(Math.PI/64));
 				}else{
-					e.setAngle(e.getAngle()-(Math.PI/128));
+					e.setAngle(e.getAngle()-(Math.PI/64));
 				}
 				e.setAngle(Utilities.coterminal(e.getAngle()));
 				
@@ -257,7 +257,12 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			}
 			
 			//draws button
-			g2.setColor(Color.gray);
+			if(paused){
+				g2.setColor(Color.red);
+			}else{
+				g2.setColor(Color.green);
+			}
+			
 			g2.fillRect(370, 820, 60, 60);
 			
 		
