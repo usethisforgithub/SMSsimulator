@@ -151,13 +151,13 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				
 				
 				//if at sensing angle
-				if(Utilities.radianEq(e.getAngle(), 2*Math.PI) || /*Utilities.radianEq(e.getAngle(), Math.PI/2)  || */Utilities.radianEq(e.getAngle(),Math.PI )|| Utilities.radianEq(e.getAngle(),3*(Math.PI/2))|| Utilities.radianEq(e.getAngle(), -Math.PI/2)  || Utilities.radianEq(e.getAngle(),-Math.PI )|| Utilities.radianEq(e.getAngle(),-3*(Math.PI/2))||Utilities.radianEq(e.getAngle(), -2*Math.PI)){
+				if(Utilities.radianEq(e.getAngle(), 2*Math.PI) || Utilities.radianEq(e.getAngle(), Math.PI/2)  || Utilities.radianEq(e.getAngle(),Math.PI )|| Utilities.radianEq(e.getAngle(),3*(Math.PI/2))|| Utilities.radianEq(e.getAngle(), -Math.PI/2)  || Utilities.radianEq(e.getAngle(),-Math.PI )|| Utilities.radianEq(e.getAngle(),-3*(Math.PI/2))||Utilities.radianEq(e.getAngle(), -2*Math.PI)){
 					e.setSensing(true);
 					
-					if(!e.getFlipped()){
+					
 					
 					//if drone is at left position
-					if( (Utilities.radianEq(e.getAngle(),Math.PI ) ||  Utilities.radianEq(e.getAngle(),-Math.PI)  )){
+					if( (Utilities.radianEq(e.getAngle(),Math.PI ) ||  Utilities.radianEq(e.getAngle(),-Math.PI)  ) && !e.getFlipped()){
 						//if no drone to the left
 						if(e.getTraj().getLeft() != null &&(!e.getTraj().getLeft().hasRightCrit())){
 							e.getTraj().removeBot(e);
@@ -171,7 +171,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 						
 					}
 					//if drone is at right
-					if( (Utilities.radianEq(e.getAngle(),2*Math.PI ) ||  Utilities.radianEq(e.getAngle(),-2*Math.PI  )||  Utilities.radianEq(e.getAngle(),0 ))){
+					if( (Utilities.radianEq(e.getAngle(),2*Math.PI ) ||  Utilities.radianEq(e.getAngle(),-2*Math.PI  )||  Utilities.radianEq(e.getAngle(),0 )) && !e.getFlipped()){
 						//if no drone to the right
 						if(e.getTraj().getRight() != null &&(!e.getTraj().getRight().hasLeftCrit())){
 							e.getTraj().removeBot(e);
@@ -181,7 +181,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							e.setFlipped(true);
 						}
 					}
-				}
+				
 				
 					
 				}else{
