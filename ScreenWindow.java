@@ -148,34 +148,46 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			//sets drones to sensing if they are at a critical point
 			for(Robot e : listBot){
 				
+				
+				
 				//if at sensing angle
-				if(Utilities.radianEq(e.getAngle(), 2*Math.PI) || Utilities.radianEq(e.getAngle(), Math.PI/2)  || Utilities.radianEq(e.getAngle(),Math.PI )|| Utilities.radianEq(e.getAngle(),3*(Math.PI/2))|| Utilities.radianEq(e.getAngle(), -Math.PI/2)  || Utilities.radianEq(e.getAngle(),-Math.PI )|| Utilities.radianEq(e.getAngle(),-3*(Math.PI/2))||Utilities.radianEq(e.getAngle(), -2*Math.PI)){
+				if(Utilities.radianEq(e.getAngle(), 2*Math.PI) || /*Utilities.radianEq(e.getAngle(), Math.PI/2)  || */Utilities.radianEq(e.getAngle(),Math.PI )|| Utilities.radianEq(e.getAngle(),3*(Math.PI/2))|| Utilities.radianEq(e.getAngle(), -Math.PI/2)  || Utilities.radianEq(e.getAngle(),-Math.PI )|| Utilities.radianEq(e.getAngle(),-3*(Math.PI/2))||Utilities.radianEq(e.getAngle(), -2*Math.PI)){
 					e.setSensing(true);
+					
+					if(!e.getFlipped()){
+					
 					//if drone is at left position
-					if( Utilities.radianEq(e.getAngle(),Math.PI ) ||  Utilities.radianEq(e.getAngle(),-Math.PI )){
+					if( (Utilities.radianEq(e.getAngle(),Math.PI ) ||  Utilities.radianEq(e.getAngle(),-Math.PI)  )){
 						//if no drone to the left
 						if(e.getTraj().getLeft() != null &&(!e.getTraj().getLeft().hasRightCrit())){
 							e.getTraj().removeBot(e);
 							e.setTrajectory(e.getTraj().getLeft());
 							e.getTraj().addBot(e);
 							e.setAngle(e.getAngle()+Math.PI - 2*e.getAngle());
+							e.setFlipped(true);
+							
+							
 						}
 						
 					}
 					//if drone is at right
-					if( Utilities.radianEq(e.getAngle(),2*Math.PI ) ||  Utilities.radianEq(e.getAngle(),-2*Math.PI  )||  Utilities.radianEq(e.getAngle(),0 )){
+					if( (Utilities.radianEq(e.getAngle(),2*Math.PI ) ||  Utilities.radianEq(e.getAngle(),-2*Math.PI  )||  Utilities.radianEq(e.getAngle(),0 ))){
 						//if no drone to the right
 						if(e.getTraj().getRight() != null &&(!e.getTraj().getRight().hasLeftCrit())){
 							e.getTraj().removeBot(e);
 							e.setTrajectory(e.getTraj().getRight());
 							e.getTraj().addBot(e);
 							e.setAngle(e.getAngle()+Math.PI-2*e.getAngle());
+							e.setFlipped(true);
 						}
 					}
-					
+				}
+				
 					
 				}else{
+					
 					e.setSensing(false);
+					e.setFlipped(false);
 				}
 			}
 			

@@ -5,17 +5,27 @@ import java.awt.geom.Ellipse2D;
 
 public class Robot {
 
-	private boolean sensing;
+	private boolean sensing, hasFlipped;
 	private Trajectory t;
 	private double angle;
 	private int sizeR;
 	
+	
 	public Robot( Trajectory traj, double ang)
 	{
+		hasFlipped = false;
 		sensing = false;
 		t = traj;
 		angle = ang;
 		sizeR = t.getSize()/5;
+	}
+	
+	public void setFlipped(boolean h){
+		hasFlipped = h;
+	}
+	
+	public boolean getFlipped(){
+		return hasFlipped;
 	}
 	
 	public Trajectory getTraj()
