@@ -152,8 +152,9 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				
 				//if at sensing angle
 				if(Utilities.radianEq(e.getAngle(), 2*Math.PI) || Utilities.radianEq(e.getAngle(), Math.PI/2)  || Utilities.radianEq(e.getAngle(),Math.PI )|| Utilities.radianEq(e.getAngle(),3*(Math.PI/2))|| Utilities.radianEq(e.getAngle(), -Math.PI/2)  || Utilities.radianEq(e.getAngle(),-Math.PI )|| Utilities.radianEq(e.getAngle(),-3*(Math.PI/2))||Utilities.radianEq(e.getAngle(), -2*Math.PI)){
-					e.setSensing(true);
 					
+					e.setSensing(true);
+					//System.out.println("1 " + e.get);
 					
 					
 					//if drone is at left position
@@ -165,7 +166,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							e.getTraj().addBot(e);
 							e.setAngle(e.getAngle()+Math.PI - 2*e.getAngle());
 							e.setFlipped(true);
-							
+							//e.setSensing(false);
 							
 						}
 						
@@ -179,6 +180,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							e.getTraj().addBot(e);
 							e.setAngle(e.getAngle()+Math.PI-2*e.getAngle());
 							e.setFlipped(true);
+							//e.setSensing(false);
 						}
 					}
 					
@@ -190,6 +192,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							e.getTraj().addBot(e);
 							e.setAngle(e.getAngle()+Math.PI+2*(3*(Math.PI/2) - e.getAngle()));
 							e.setFlipped(true);
+							//e.setSensing(false);
 						}
 					}
 					
@@ -201,6 +204,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							e.getTraj().addBot(e);
 							e.setAngle(e.getAngle()+Math.PI+2*(3*(Math.PI/2) - e.getAngle()));
 							e.setFlipped(true);
+							//e.setSensing(false);
 						}
 					}
 				
@@ -256,14 +260,27 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				listBot.get(i).draw(g2);
 			}
 			
-			//draws button
+			
+			
+			
+			
+			//draws pause button
+			
 			if(paused){
+				
 				g2.setColor(Color.red);
+				g2.fillRect(370, 820, 60, 60);
+				g2.setColor(Color.black);
+				g2.drawString("Resume", 315, 865);
 			}else{
+				
 				g2.setColor(Color.green);
+				g2.fillRect(370, 820, 60, 60);
+				g2.setColor(Color.black);
+				g2.drawString("Pause", 325, 865);
 			}
 			
-			g2.fillRect(370, 820, 60, 60);
+			
 			
 		
 		g2 = (Graphics2D)this.getGraphics();

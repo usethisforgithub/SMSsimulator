@@ -68,12 +68,12 @@ public class Robot {
 		
 		
 		
-		if(sensing){
-			g2.setColor(Color.yellow);
-		}else{
-			g2.setColor(Color.black);
-		}
-		
+		//if(sensing){
+		//	g2.setColor(Color.yellow);
+		//}else{
+		//	g2.setColor(Color.black);
+		//}
+		g2.setColor(Color.black);
 		//g2.fill((Shape) Color.black);
 		g2.fill(new Ellipse2D.Double(t.getVertex().geti() + t.getSize()/2*Math.cos(angle) - sizeR/2, t.getVertex().getj() - t.getSize()/2*Math.sin(angle) - sizeR/2, sizeR, sizeR));//t.getSize()*Math.cos(angle)
 	}

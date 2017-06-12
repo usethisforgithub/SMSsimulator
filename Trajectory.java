@@ -118,13 +118,13 @@ public class Trajectory {
 	public void draw(Graphics2D g2)
 	{
 		
-		if(direction == 1){
-			g2.setColor(Color.blue);
-		}else{
-			g2.setColor(Color.red);
-		}
+		//if(direction == 1){
+		//	g2.setColor(Color.blue);
+		//}else{
+		//	g2.setColor(Color.red);
+		//}
 		
-		//g2.setColor(Color.black);
+		g2.setColor(Color.black);
 		g2.draw(new Ellipse2D.Double(vertex.geti() - sizeT / 2, vertex.getj() - sizeT / 2, sizeT, sizeT));
 	}
 }
