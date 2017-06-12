@@ -181,6 +181,28 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							e.setFlipped(true);
 						}
 					}
+					
+					if( (Utilities.radianEq(e.getAngle(), (Math.PI/2)) ||  Utilities.radianEq(e.getAngle(),-3*(Math.PI/2))) && !e.getFlipped()){
+						//if no drone to the top
+						if(e.getTraj().getTop() != null &&(!e.getTraj().getTop().hasBottomCrit())){
+							e.getTraj().removeBot(e);
+							e.setTrajectory(e.getTraj().getTop());
+							e.getTraj().addBot(e);
+							e.setAngle(e.getAngle()+Math.PI+2*(3*(Math.PI/2) - e.getAngle()));
+							e.setFlipped(true);
+						}
+					}
+					
+					if( (Utilities.radianEq(e.getAngle(), -(Math.PI/2)) ||  Utilities.radianEq(e.getAngle(), 3*(Math.PI/2))) && !e.getFlipped()){
+						//if no drone to the bottom
+						if(e.getTraj().getBottom() != null &&(!e.getTraj().getBottom().hasTopCrit())){
+							e.getTraj().removeBot(e);
+							e.setTrajectory(e.getTraj().getBottom());
+							e.getTraj().addBot(e);
+							e.setAngle(e.getAngle()+Math.PI+2*(3*(Math.PI/2) - e.getAngle()));
+							e.setFlipped(true);
+						}
+					}
 				
 				
 					
