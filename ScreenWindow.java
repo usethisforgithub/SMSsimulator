@@ -41,6 +41,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private double tempAng = ang;
 	private int trajSize; 
 	private ArrayList<Arc> allArcs;
+	private ArrayList<Ring> ringList;
 	
 	
 	public ScreenWindow(int r, int c, int d, double a){
@@ -54,6 +55,12 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		numCol = c;
 		ang = a;
 		tempDir = d;
+		
+		
+		
+		//other initialize
+		ringList = new ArrayList<Ring>();
+		
 		
 		//resizing code
 		int horCircle = 700/numCol;
@@ -135,6 +142,16 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			allArcs.add(new Arc(e,4));
 		}
 		
+		for(Trajectory t : listTraj){
+		//	Robot testBot = new Robot(t,1,);
+		}
+		
+		
+		
+		
+		
+		//makew3s first ring
+		Ring ring = new Ring();
 		for(Arc e : allArcs){
 			
 		}

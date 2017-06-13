@@ -19,4 +19,12 @@ public class Arc {
 	public boolean isAssigned(){
 		return assigned;
 	}
+	
+	public int getQuadrant(){
+		return quadrant;
+	}
+	
+	public Trajectory getTraj(){
+		return traj;
+	}
 }
