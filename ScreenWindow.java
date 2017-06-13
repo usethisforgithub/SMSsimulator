@@ -95,7 +95,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					tempAng = colAng;
 				}
 				Trajectory tempTraj = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-4);
-				Robot tempBot = new Robot(tempTraj, tempAng);
+				Robot tempBot = new Robot(tempTraj, tempAng,j,i);
 				listTraj.add(tempTraj);
 				listBot.add(tempBot);
 				tempTraj.addBot(tempBot);
@@ -280,17 +280,19 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			//draws pause button
 			
 			if(paused){
-				
+			
 				g2.setColor(Color.red);
 				g2.fillRect(370, 820, 60, 60);
 				g2.setColor(Color.black);
-				g2.drawString("Resume", 315, 865);
+				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+				g2.drawString("Resume", 375, 850);
 			}else{
 				
 				g2.setColor(Color.green);
 				g2.fillRect(370, 820, 60, 60);
 				g2.setColor(Color.black);
-				g2.drawString("Pause", 325, 865);
+				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+				g2.drawString("Pause", 380, 850);
 			}
 			
 			

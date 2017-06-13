@@ -1,4 +1,6 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
@@ -9,16 +11,19 @@ public class Robot {
 	private Trajectory t;
 	private double angle;
 	private int sizeR;
-	private int id;
+	private int startingX;
+	private int startingY;
 	
 	
-	public Robot( Trajectory traj, double ang)
+	public Robot( Trajectory traj, double ang, int x, int y)
 	{
 		hasFlipped = false;
 		sensing = false;
 		t = traj;
 		angle = ang;
 		sizeR = t.getSize()/5;
+		startingX = x;
+		startingY = y;
 	}
 	
 	public void setFlipped(boolean h){
@@ -77,6 +82,14 @@ public class Robot {
 		g2.setColor(Color.black);
 		//g2.fill((Shape) Color.black);
 		g2.fill(new Ellipse2D.Double(t.getVertex().geti() + t.getSize()/2*Math.cos(angle) - sizeR/2, t.getVertex().getj() - t.getSize()/2*Math.sin(angle) - sizeR/2, sizeR, sizeR));//t.getSize()*Math.cos(angle)
+	
+		g2.setColor(Color.white);
+		Font font = new Font("Callibri", Font.PLAIN, sizeR/3);//font.getStringBounds("Waller's Triangle Game", g2.getFontRenderContext()).getWidth())/2)
+		
+		g2.setFont(font);
+		//g2.setStroke(new BasicStroke(sizeR/4));
+		g2.drawString(startingX +","+startingY, (int)(t.getVertex().geti() + t.getSize()/2*Math.cos(angle)-sizeR/6), (int)(t.getVertex().getj() - t.getSize()/2*Math.sin(angle)+sizeR/6));
+	
 	}
 	
 	public Coordinate getPosition(){
