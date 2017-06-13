@@ -63,6 +63,20 @@ public class Trajectory {
 		return arc4;
 	}
 	
+	public Arc whichArc(Robot b){
+		if((b.getAngle() >0 && b.getAngle()< Math.PI/2) || (b.getAngle() > -2*Math.PI && b.getAngle() < -3*Math.PI/2)){
+			return arc1;
+		}
+		if((b.getAngle() > Math.PI/2 && b.getAngle()< Math.PI) || (b.getAngle() > -3*Math.PI/2 && b.getAngle() < -Math.PI)){
+			return arc2;
+		}
+		if((b.getAngle() > Math.PI && b.getAngle()< 3*Math.PI/2) || (b.getAngle() > -Math.PI && b.getAngle() < -Math.PI/2)){
+			return arc3;
+		}
+		else
+			return arc4;//Alinta took a shortcut XD
+	}
+	
 	public void addBot(Robot b){
 		bots.add(b);
 	}

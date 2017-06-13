@@ -8,6 +8,14 @@ public class Arc {
 	private Ring ring;
 	
 	
+	//possible flag
+	public static boolean compare(Arc a, Arc b){
+		if(a.getTraj().equals(b.getTraj()) && a.getQuadrant() == b.getQuadrant()){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 	public Arc(Trajectory t, int q){
 		traj = t;
@@ -41,5 +49,9 @@ public class Arc {
 	
 	public void setRing(Ring r){
 		ring = r;
+	}
+	
+	public Ring getRing(){
+		return ring;
 	}
 }

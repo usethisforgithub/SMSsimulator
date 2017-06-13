@@ -25,4 +25,8 @@ public class Ring {
 	public void addArc(Arc a){
 		arcList.add(a);
 	}
+	
+	public Color getColor(){
+		return color;
+	}
 }

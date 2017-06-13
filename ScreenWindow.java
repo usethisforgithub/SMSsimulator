@@ -134,7 +134,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			}
 		}
 		
-		
+		//makes list of all arcs
 		allArcs = new ArrayList<Arc>();
 		for(Trajectory e : listTraj){
 			
@@ -144,8 +144,76 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			allArcs.add(e.getArc4());
 		}
 		
+		Ring tempRing;
+		/*
+		for(Arc e : allArcs){
+			if(!e.isAssigned()){
+				//run robot along path and assign arcs to a new ring
+				
+				//placing robot
+				tempRing = new Ring();
+				double quadAngle = -1111;
+				if(e.getQuadrant() == 1){
+					quadAngle = Math.PI/4;
+				}
+				
+				if(e.getQuadrant() == 2){
+					quadAngle = 3*Math.PI/4;
+				}
+				
+				if(e.getQuadrant() == 3){
+					quadAngle = 5*Math.PI/4;
+				}
+				
+				if(e.getQuadrant() == 4){
+					quadAngle = 7*Math.PI/4;
+				}
+				
+				Robot robot = new Robot(e.getTraj(),quadAngle, 1,1);
+				boolean unfinished = true;
+				
+				
+				Arc lastArc = null;
+				while(unfinished){
+					//breaks out of loop if robot comes accross asigned arc
+					if(robot.getTraj().whichArc(robot).isAssigned()){
+						unfinished = false;
+						if(lastArc != null){
+							lastArc.setAssigned(true);
+							lastArc.setRing(tempRing);
+							tempRing.addArc(lastArc);
+						}
+					}else{
+						robot.getTraj().whichArc(robot).setAssigned(true);
+						if(lastArc != null && !allArcs.contains(lastArc)){
+							lastArc.setAssigned(true);
+							lastArc.setRing(tempRing);
+							tempRing.addArc(lastArc);
+							lastArc = robot.getTraj().whichArc(robot);
+						}
+					}
+					
+					
+					//moves robot
+					if(robot.getTraj().getDirection() == -1){
+						robot.setAngle(robot.getAngle()+(Math.PI/6));
+					}else{
+						robot.setAngle(robot.getAngle()-(Math.PI/6));
+					}
+					robot.setAngle(Utilities.coterminal(robot.getAngle()));
+					
+					
+				}
+				
+				ringList.add(tempRing);
+			}
+		}
 		
+		for(Arc e : allArcs){
+			e.setColor(e.getRing().getColor());
+		}
 		
+		*/
 		
 		
 		
@@ -252,7 +320,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			if(!paused){
 			for(Robot e : listBot){
 				if(e.getTraj().getDirection() == -1){
-					e.setAngle(e.getAngle()+(Math.PI/64));
+					e.setAngle(e.getAngle()+(Math.PI/64));//64 is good
 				}else{
 					e.setAngle(e.getAngle()-(Math.PI/64));
 				}
