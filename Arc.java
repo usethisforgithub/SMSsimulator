@@ -1,8 +1,11 @@
+import java.awt.Color;
 
 public class Arc {
 	private Trajectory traj;
 	private int quadrant;
 	private boolean assigned;
+	private Color color;
+	private Ring ring;
 	
 	
 	
@@ -26,5 +29,17 @@ public class Arc {
 	
 	public Trajectory getTraj(){
 		return traj;
+	}
+	
+	public Color getColor(){
+		return color; 
+	}
+	
+	public void setColor(Color c){
+		color = c;
+	}
+	
+	public void setRing(Ring r){
+		ring = r;
 	}
 }

@@ -136,15 +136,14 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		allArcs = new ArrayList<Arc>();
 		for(Trajectory e : listTraj){
-			allArcs.add(new Arc(e,1));
-			allArcs.add(new Arc(e,2));
-			allArcs.add(new Arc(e,3));
-			allArcs.add(new Arc(e,4));
+			
+			allArcs.add(e.getArc1());
+			allArcs.add(e.getArc2());
+			allArcs.add(e.getArc3());
+			allArcs.add(e.getArc4());
 		}
 		
-		for(Trajectory t : listTraj){
-		//	Robot testBot = new Robot(t,1,);
-		}
+		
 		
 		
 		
