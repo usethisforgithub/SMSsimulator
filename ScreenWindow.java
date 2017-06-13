@@ -299,27 +299,35 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			
 			if(paused){
 			
-				g2.setColor(Color.red);
+				g2.setColor(Color.green);
 				g2.fillRect(370, 820, 60, 60);
 				g2.setColor(Color.black);
 				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
 				g2.drawString("Resume", 375, 850);
 			}else{
 				
-				g2.setColor(Color.green);
+				g2.setColor(Color.red);
 				g2.fillRect(370, 820, 60, 60);
-				g2.setColor(Color.black);
+				g2.setColor(Color.white);
 				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
 				g2.drawString("Pause", 380, 850);
 			}
 			
 			//draws toggle button
 			
-			g2.setColor(Color.gray);
-			g2.fillRect(440, 820, 60, 60);
-			g2.setColor(Color.black);
-			g2.setFont(new Font("Callibri", Font.PLAIN, 12));
-			g2.drawString("Bot ID", 440, 850);
+			if(droneLabelToggle){
+				g2.setColor(Color.DARK_GRAY);
+				g2.fillRect(440, 820, 60, 60);
+				g2.setColor(Color.white);
+				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+				g2.drawString("IDs off", 450, 850);
+			}else{
+				g2.setColor(Color.LIGHT_GRAY);
+				g2.fillRect(440, 820, 60, 60);
+				g2.setColor(Color.black);
+				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+				g2.drawString("IDs on", 450, 850);
+			}
 			
 			
 		
