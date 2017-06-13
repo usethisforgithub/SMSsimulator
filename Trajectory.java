@@ -15,6 +15,7 @@ public class Trajectory {
 	private Arc arc3;
 	private Arc arc4;
 	
+	
 	public Trajectory(Coordinate v, int dir, int s)
 	{
 		arc1 = new Arc(this,1);
@@ -174,7 +175,7 @@ public class Trajectory {
 		//}
 		
 		//original
-		//g2.setColor(Color.black);
-		//g2.draw(new Ellipse2D.Double(vertex.geti() - sizeT / 2, vertex.getj() - sizeT / 2, sizeT, sizeT));
+		g2.setColor(Color.black);
+		g2.draw(new Ellipse2D.Double(vertex.geti() - sizeT / 2, vertex.getj() - sizeT / 2, sizeT, sizeT));
 	}
 }

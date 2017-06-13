@@ -29,7 +29,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	
 	private ArrayList<Trajectory> listTraj = new ArrayList<Trajectory>();
 	private ArrayList<Robot> listBot = new ArrayList<Robot>();
-	private boolean paused;
+	private boolean paused, droneLabelToggle;
 	
 	//used to make trajectories
 	private int numRows;
@@ -51,6 +51,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		//user inputs
 		paused = true;
+		droneLabelToggle = false;
 		numRows = r;
 		numCol = c;
 		ang = a;
@@ -286,6 +287,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			
 			//draws robots
 			for(int i = 0; i < listBot.size(); i++){
+				listBot.get(i).setLabelToggle(droneLabelToggle);
 				listBot.get(i).draw(g2);
 			}
 			
@@ -311,6 +313,13 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				g2.drawString("Pause", 380, 850);
 			}
 			
+			//draws toggle button
+			
+			g2.setColor(Color.gray);
+			g2.fillRect(440, 820, 60, 60);
+			g2.setColor(Color.black);
+			g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+			g2.drawString("Bot ID", 440, 850);
 			
 			
 		
@@ -423,6 +432,11 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		//if click is inside the button, toggles pause
 		if((arg0.getX() >= 370 && arg0.getX() <= 430) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
 			paused = !paused;
+		}
+		
+		//drone label toggle
+		if((arg0.getX() >= 440 && arg0.getX() <= 500) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
+			droneLabelToggle = !droneLabelToggle;
 		}
 		
 		for(int i = 0; i < listBot.size(); i++){

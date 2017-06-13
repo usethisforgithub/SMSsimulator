@@ -13,10 +13,12 @@ public class Robot {
 	private int sizeR;
 	private int startingX;
 	private int startingY;
+	private boolean labelToggle;
 	
 	
 	public Robot( Trajectory traj, double ang, int x, int y)
 	{
+		labelToggle = false;
 		hasFlipped = false;
 		sensing = false;
 		t = traj;
@@ -68,6 +70,10 @@ public class Robot {
 		return hypotenuse < sizeR / 2;
 	}
 	
+	public void setLabelToggle(boolean b){
+		labelToggle = b;
+	}
+	
 	public void draw(Graphics2D g2)
 	{
 		
@@ -88,7 +94,9 @@ public class Robot {
 		
 		g2.setFont(font);
 		//g2.setStroke(new BasicStroke(sizeR/4));
+		if(labelToggle){
 		g2.drawString(startingX +","+startingY, (int)(t.getVertex().geti() + t.getSize()/2*Math.cos(angle)-sizeR/6), (int)(t.getVertex().getj() - t.getSize()/2*Math.sin(angle)+sizeR/6));
+		}
 	
 	}
 	
