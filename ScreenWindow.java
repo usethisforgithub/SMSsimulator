@@ -233,9 +233,12 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				System.out.println(colorArray[iterator].toString());
 				
 			}
-			
+			iterator++;
+			if(iterator > 7){
+				iterator = 0;
+			}
 		}
-		iterator++;
+		
 		
 		
 	//	for(Arc e : allArcs){
