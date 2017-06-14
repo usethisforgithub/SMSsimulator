@@ -145,15 +145,20 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		}
 		
 		
+		
+		
+		//assigns each arc to the correct ring
+		ringList = new ArrayList<Ring>();
 		Ring tempRing;
-		//comments
+		
 		for(Arc e : allArcs){
 			if(!e.isAssigned()){
-				//run robot along path and assign arcs to a new ring
-				
-				//placing robot
 				tempRing = new Ring();
-				System.out.println(ringList.size());
+				int tempQuad = e.getQuadrant();
+				tempRing.addArc(e);
+				e.setAssigned(true);
+				
+				//places the robot
 				double quadAngle = -1111;
 				if(e.getQuadrant() == 1){
 					quadAngle = Math.PI/4;
@@ -170,67 +175,121 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				if(e.getQuadrant() == 4){
 					quadAngle = 7*Math.PI/4;
 				}
-				
 				Robot robot = new Robot(e.getTraj(),quadAngle, 1,1);
 				boolean unfinished = true;
 				
-				
-				Arc lastArc = null;
 				while(unfinished){
-					//breaks out of loop if robot comes accross asigned arc
-					if(robot.getTraj().whichArc(robot).isAssigned()){
-						
+					
+				//if it switches arcs
+				if(robot.getTraj().whichArc(robot).getQuadrant() != tempQuad){
+					tempRing.addArc(robot.getTraj().whichArc(robot));
+					robot.getTraj().whichArc(robot).setAssigned(true);
+					robot.getTraj().whichArc(robot).setRing(tempRing);
+					tempQuad = robot.getTraj().whichArc(robot).getQuadrant();
+					if(robot.getTraj().whichArc(robot) == e){
 						unfinished = false;
-						if(lastArc != null){
-							
-							lastArc.setAssigned(true);
-							lastArc.setRing(tempRing);
-							tempRing.addArc(lastArc);
-							//System.out.println(e.getRing().toString());
-						}
-					}else{
-						robot.getTraj().whichArc(robot).setAssigned(true);
-						lastArc = robot.getTraj().whichArc(robot);
-						//this if statement never evaluates rue for some reason
-						if(lastArc != null && !allArcs.contains(lastArc)){
-							lastArc.setAssigned(true);
-							lastArc.setRing(tempRing);
-							tempRing.addArc(lastArc);
-							
-							lastArc = robot.getTraj().whichArc(robot);
-							//System.out.println(e.getRing().toString());
-						}
 					}
-					
-					
-					//moves robot
-					if(robot.getTraj().getDirection() == -1){
-						robot.setAngle(robot.getAngle()+(Math.PI/6));
-					}else{
-						robot.setAngle(robot.getAngle()-(Math.PI/6));
-					}
-					robot.setAngle(Utilities.coterminal(robot.getAngle()));
-					
-					
 				}
 				
+				
+				
+				if(Utilities.radianEq(robot.getAngle(), 2*Math.PI) || Utilities.radianEq(robot.getAngle(), Math.PI/2)  || Utilities.radianEq(robot.getAngle(),Math.PI )|| Utilities.radianEq(robot.getAngle(),3*(Math.PI/2))|| Utilities.radianEq(robot.getAngle(), -Math.PI/2)  || Utilities.radianEq(robot.getAngle(),-Math.PI )|| Utilities.radianEq(robot.getAngle(),-3*(Math.PI/2))||Utilities.radianEq(robot.getAngle(), -2*Math.PI)){
+					
+					robot.setSensing(true);
+					//System.out.println("1 " + e.get);
+					
+					
+					//if drone is at left position
+					if( (Utilities.radianEq(robot.getAngle(),Math.PI ) ||  Utilities.radianEq(robot.getAngle(),-Math.PI)  ) && !robot.getFlipped()){
+						//if no drone to the left
+						if(robot.getTraj().getLeft() != null &&(!robot.getTraj().getLeft().hasRightCrit())){
+							
+							robot.getTraj().removeBot(robot);
+							robot.setTrajectory(robot.getTraj().getLeft());
+							robot.getTraj().addBot(robot);
+							robot.setAngle(robot.getAngle()+Math.PI - 2*robot.getAngle());
+							robot.setFlipped(true);
+							//e.setSensing(false);
+							
+						}
+						
+					}
+					//if drone is at right
+					if( (Utilities.radianEq(robot.getAngle(),2*Math.PI ) ||  Utilities.radianEq(robot.getAngle(),-2*Math.PI  )||  Utilities.radianEq(robot.getAngle(),0 )) && !robot.getFlipped()){
+						//if no drone to the right
+						if(robot.getTraj().getRight() != null &&(!robot.getTraj().getRight().hasLeftCrit())){
+							
+							robot.getTraj().removeBot(robot);
+							robot.setTrajectory(robot.getTraj().getRight());
+							robot.getTraj().addBot(robot);
+							robot.setAngle(robot.getAngle()+Math.PI-2*robot.getAngle());
+							robot.setFlipped(true);
+							//e.setSensing(false);
+						}
+					}
+					
+					if( (Utilities.radianEq(robot.getAngle(), (Math.PI/2)) ||  Utilities.radianEq(robot.getAngle(),-3*(Math.PI/2))) && !robot.getFlipped()){
+						//if no drone to the top
+						if(robot.getTraj().getTop() != null &&(!robot.getTraj().getTop().hasBottomCrit())){
+							
+							robot.getTraj().removeBot(robot);
+							robot.setTrajectory(robot.getTraj().getTop());
+							robot.getTraj().addBot(robot);
+							robot.setAngle(robot.getAngle()+Math.PI+2*(3*(Math.PI/2) - robot.getAngle()));
+							robot.setFlipped(true);
+							//e.setSensing(false);
+						}
+					}
+					
+					if( (Utilities.radianEq(robot.getAngle(), -(Math.PI/2)) ||  Utilities.radianEq(robot.getAngle(), 3*(Math.PI/2))) && !robot.getFlipped()){
+						//if no drone to the bottom
+						if(robot.getTraj().getBottom() != null &&(!robot.getTraj().getBottom().hasTopCrit())){
+							
+							robot.getTraj().removeBot(robot);
+							robot.setTrajectory(robot.getTraj().getBottom());
+							robot.getTraj().addBot(robot);
+							robot.setAngle(robot.getAngle()+Math.PI+2*(3*(Math.PI/2) - robot.getAngle()));
+							robot.setFlipped(true);
+							//e.setSensing(false);
+						}
+					}
+				
+				
+					
+				}else{
+					
+					robot.setSensing(false);
+					robot.setFlipped(false);
+				}
+				
+				
+				if(robot.getTraj().getDirection() == -1){
+					robot.setAngle(robot.getAngle()+(Math.PI/64));//6
+				}else{
+					robot.setAngle(robot.getAngle()-(Math.PI/64));
+				}
+				robot.setAngle(Utilities.coterminal(robot.getAngle()));
+				
+			}
+				
 				ringList.add(tempRing);
+				
 			}
 		}
 		
-		System.out.println(ringList.size());
 		
-		System.out.println("got here");
+		
+		
 		
 		
 		int iterator = 0;
 		for(Ring e : ringList){
-			System.out.println("got here too");
+			
 			
 			for(Arc f : e.getArcList()){
 				
 				f.setColor(colorArray[iterator]);
-				System.out.println(colorArray[iterator].toString());
+				
 				
 			}
 			iterator++;
