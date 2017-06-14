@@ -29,4 +29,12 @@ public class Ring {
 	public Color getColor(){
 		return color;
 	}
+	
+	public String toString(){
+		return "num of arcs " + arcList.size();
+	}
+	
+	public ArrayList<Arc> getArcList(){
+		return arcList;
+	}
 }

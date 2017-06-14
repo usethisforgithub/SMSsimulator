@@ -42,7 +42,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private int trajSize; 
 	private ArrayList<Arc> allArcs;
 	private ArrayList<Ring> ringList;
-	
+	private Color[] colorArray = {Color.blue, Color.red, Color.green, Color.yellow, Color.pink, Color.ORANGE, Color.cyan, Color.magenta};
 	
 	public ScreenWindow(int r, int c, int d, double a){
 		super();
@@ -144,14 +144,16 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			allArcs.add(e.getArc4());
 		}
 		
+		
 		Ring tempRing;
-		/*
+		//comments
 		for(Arc e : allArcs){
 			if(!e.isAssigned()){
 				//run robot along path and assign arcs to a new ring
 				
 				//placing robot
 				tempRing = new Ring();
+				System.out.println(ringList.size());
 				double quadAngle = -1111;
 				if(e.getQuadrant() == 1){
 					quadAngle = Math.PI/4;
@@ -177,19 +179,26 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				while(unfinished){
 					//breaks out of loop if robot comes accross asigned arc
 					if(robot.getTraj().whichArc(robot).isAssigned()){
+						
 						unfinished = false;
 						if(lastArc != null){
+							
 							lastArc.setAssigned(true);
 							lastArc.setRing(tempRing);
 							tempRing.addArc(lastArc);
+							//System.out.println(e.getRing().toString());
 						}
 					}else{
 						robot.getTraj().whichArc(robot).setAssigned(true);
+						lastArc = robot.getTraj().whichArc(robot);
+						//this if statement never evaluates rue for some reason
 						if(lastArc != null && !allArcs.contains(lastArc)){
 							lastArc.setAssigned(true);
 							lastArc.setRing(tempRing);
 							tempRing.addArc(lastArc);
+							
 							lastArc = robot.getTraj().whichArc(robot);
+							//System.out.println(e.getRing().toString());
 						}
 					}
 					
@@ -209,20 +218,40 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			}
 		}
 		
-		for(Arc e : allArcs){
-			e.setColor(e.getRing().getColor());
-		}
+		System.out.println(ringList.size());
 		
-		*/
+		System.out.println("got here");
 		
 		
-		
-		
-		//makew3s first ring
-		Ring ring = new Ring();
-		for(Arc e : allArcs){
+		int iterator = 0;
+		for(Ring e : ringList){
+			System.out.println("got here too");
+			
+			for(Arc f : e.getArcList()){
+				
+				f.setColor(colorArray[iterator]);
+				System.out.println(colorArray[iterator].toString());
+				
+			}
 			
 		}
+		iterator++;
+		
+		
+	//	for(Arc e : allArcs){
+			//e.setColor(e.getRing().getColor());
+			//e.setColor(Color.red);
+			
+		//}
+		
+		//comments
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		//more window stuff

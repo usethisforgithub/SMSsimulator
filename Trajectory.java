@@ -189,7 +189,7 @@ public class Trajectory {
 		//}
 		
 		//original
-		g2.setColor(Color.black);
-		g2.draw(new Ellipse2D.Double(vertex.geti() - sizeT / 2, vertex.getj() - sizeT / 2, sizeT, sizeT));
+		//g2.setColor(Color.black);
+		//g2.draw(new Ellipse2D.Double(vertex.geti() - sizeT / 2, vertex.getj() - sizeT / 2, sizeT, sizeT));
 	}
 }
