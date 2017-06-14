@@ -155,6 +155,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			if(!e.isAssigned()){
 				tempRing = new Ring();
 				int tempQuad = e.getQuadrant();
+				Trajectory tempT =e.getTraj();
 				tempRing.addArc(e);
 				e.setAssigned(true);
 				
@@ -181,7 +182,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				while(unfinished){
 					
 				//if it switches arcs
-				if(robot.getTraj().whichArc(robot).getQuadrant() != tempQuad){
+				if(robot.getTraj().whichArc(robot).getQuadrant() != tempQuad && robot.getTraj() == tempT){
 					tempRing.addArc(robot.getTraj().whichArc(robot));
 					robot.getTraj().whichArc(robot).setAssigned(true);
 					robot.getTraj().whichArc(robot).setRing(tempRing);
@@ -189,6 +190,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					if(robot.getTraj().whichArc(robot) == e){
 						unfinished = false;
 					}
+				}else if(robot.getTraj() != tempT){
+					tempT = robot.getTraj();
 				}
 				
 				
@@ -207,7 +210,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							robot.getTraj().removeBot(robot);
 							robot.setTrajectory(robot.getTraj().getLeft());
 							robot.getTraj().addBot(robot);
-							robot.setAngle(robot.getAngle()+Math.PI - 2*robot.getAngle());
+							robot.setAngle(robot.getAngle()+Math.PI);
 							robot.setFlipped(true);
 							//e.setSensing(false);
 							
@@ -222,7 +225,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							robot.getTraj().removeBot(robot);
 							robot.setTrajectory(robot.getTraj().getRight());
 							robot.getTraj().addBot(robot);
-							robot.setAngle(robot.getAngle()+Math.PI-2*robot.getAngle());
+							robot.setAngle(robot.getAngle()+Math.PI);
 							robot.setFlipped(true);
 							//e.setSensing(false);
 						}
@@ -235,7 +238,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							robot.getTraj().removeBot(robot);
 							robot.setTrajectory(robot.getTraj().getTop());
 							robot.getTraj().addBot(robot);
-							robot.setAngle(robot.getAngle()+Math.PI+2*(3*(Math.PI/2) - robot.getAngle()));
+							robot.setAngle(robot.getAngle()+Math.PI);
 							robot.setFlipped(true);
 							//e.setSensing(false);
 						}
@@ -248,7 +251,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 							robot.getTraj().removeBot(robot);
 							robot.setTrajectory(robot.getTraj().getBottom());
 							robot.getTraj().addBot(robot);
-							robot.setAngle(robot.getAngle()+Math.PI+2*(3*(Math.PI/2) - robot.getAngle()));
+							robot.setAngle(robot.getAngle()+Math.PI);
 							robot.setFlipped(true);
 							//e.setSensing(false);
 						}
