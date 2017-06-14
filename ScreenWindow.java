@@ -20,6 +20,13 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 public class ScreenWindow extends Frame implements WindowListener, Runnable, KeyListener, MouseListener{
 
 	//window stuff
@@ -535,6 +542,14 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				g2.drawString("Rings on", 305, 850);
 			}
 			
+			//draws restart button
+			
+			g2.setColor(Color.RED);
+			g2.fillRect(230, 820, 60, 60);
+			g2.setColor(Color.white);
+			g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+			g2.drawString("New Grid", 235, 850);
+			
 			
 		
 		g2 = (Graphics2D)this.getGraphics();
@@ -607,12 +622,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int keyCode = e.getKeyCode();
-		
-		
-		
-		
-		
+	
 		
 	}
 
@@ -664,6 +674,60 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				listBot.remove(i);
 			}
 		}
+		
+		
+		//new grid button
+		if((arg0.getX() >= 230 && arg0.getX() <= 290) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
+			
+			
+			
+			JTextField aField = new JTextField(5);
+		    JTextField bField = new JTextField(5);
+		    JTextField cField = new JTextField(5);
+		    JTextField dField = new JTextField(5);
+		    
+		    JPanel myPanel = new JPanel();
+		    myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+		    
+		    myPanel.add(new JLabel("Enter # of rows:"));
+		    myPanel.add(aField);
+		    
+		    myPanel.add(Box.createVerticalStrut(15));
+		    
+		    myPanel.add(new JLabel("Enter # of columns:"));
+		    myPanel.add(bField);
+
+		    myPanel.add(Box.createVerticalStrut(15));
+		    
+		    myPanel.add(new JLabel("Enter direction of first trajectory (-1, 1):"));
+		    myPanel.add(cField);
+
+		    myPanel.add(Box.createVerticalStrut(15));
+		    
+		    myPanel.add(new JLabel("Angle of first drone:"));
+		    myPanel.add(dField);
+		    
+		    int result = JOptionPane.showConfirmDialog(null, myPanel, 
+		             "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+		    if (result == JOptionPane.OK_OPTION) {
+		    }
+		    
+		   // String temp1 = aField.getText();
+		  //  String temp2 = bField.getText();
+		  //  String temp3 = cField.getText();
+		  //  String temp4 = dField.getText();
+		    
+		   // if(r)
+			int r = Integer.parseInt(aField.getText());
+			int c = Integer.parseInt(bField.getText());
+			int d = Integer.parseInt(cField.getText());
+			double a = Double.parseDouble(dField.getText());
+
+			ScreenWindow window = new ScreenWindow(r,c,d,a);
+			new Thread(window).start();
+			
+		}
+		
 		
 	}
 
