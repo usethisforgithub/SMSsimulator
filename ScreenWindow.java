@@ -29,7 +29,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	
 	private ArrayList<Trajectory> listTraj = new ArrayList<Trajectory>();
 	private ArrayList<Robot> listBot = new ArrayList<Robot>();
-	private boolean paused, droneLabelToggle;
+	private boolean paused, droneLabelToggle, ringColorToggle;
 	
 	//used to make trajectories
 	private int numRows;
@@ -42,7 +42,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private int trajSize; 
 	private ArrayList<Arc> allArcs;
 	private ArrayList<Ring> ringList;
-	private Color[] colorArray = {Color.blue, Color.red, Color.green, Color.yellow, Color.pink, Color.ORANGE, Color.cyan, Color.magenta};
+	private Color[] colorArray = {Color.blue, Color.red, Color.green, Color.pink, Color.ORANGE, Color.cyan, Color.magenta, Color.LIGHT_GRAY};
 	
 	public ScreenWindow(int r, int c, int d, double a){
 		super();
@@ -51,6 +51,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		//user inputs
 		paused = true;
+		ringColorToggle = false;
 		droneLabelToggle = false;
 		numRows = r;
 		numCol = c;
@@ -291,12 +292,13 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			
 			for(Arc f : e.getArcList()){
 				
+				
 				f.setColor(colorArray[iterator]);
 				
 				
 			}
 			iterator++;
-			if(iterator > 7){
+			if(iterator > colorArray.length-1){
 				iterator = 0;
 			}
 		}
@@ -419,7 +421,6 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					e.setAngle(e.getAngle()-(Math.PI/64));
 				}
 				e.setAngle(Utilities.coterminal(e.getAngle()));
-				
 			}
 			
 			}
@@ -441,6 +442,33 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		g2.setColor(Color.white);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 				
+		
+			//toggles arc color
+			if(!ringColorToggle){
+				for(Arc ar : allArcs){
+					ar.setColor(Color.black);
+				}
+				
+			}else{
+				int iterator = 0;
+				for(Ring e : ringList){
+					
+					
+					for(Arc f : e.getArcList()){
+						
+						
+						f.setColor(colorArray[iterator]);
+						
+						
+					}
+					iterator++;
+					if(iterator > colorArray.length-1){
+						iterator = 0;
+					}
+				}
+			}
+		
+		
 			//draws trajectories
 			for(int i = 0; i < listTraj.size(); i++)
 			{
@@ -475,7 +503,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				g2.drawString("Pause", 380, 850);
 			}
 			
-			//draws toggle button
+			//draws ID button
 			
 			if(droneLabelToggle){
 				g2.setColor(Color.DARK_GRAY);
@@ -489,6 +517,22 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				g2.setColor(Color.black);
 				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
 				g2.drawString("IDs on", 450, 850);
+			}
+			
+			//draws ring button
+			
+			if(ringColorToggle){
+				g2.setColor(Color.BLUE);
+				g2.fillRect(300, 820, 60, 60);
+				g2.setColor(Color.white);
+				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+				g2.drawString("Rings off", 305, 850);
+			}else{
+				g2.setColor(Color.cyan);
+				g2.fillRect(300, 820, 60, 60);
+				g2.setColor(Color.black);
+				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+				g2.drawString("Rings on", 305, 850);
 			}
 			
 			
@@ -607,6 +651,11 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		//drone label toggle
 		if((arg0.getX() >= 440 && arg0.getX() <= 500) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
 			droneLabelToggle = !droneLabelToggle;
+		}
+		
+		//drone label toggle
+		if((arg0.getX() >= 300 && arg0.getX() <= 360) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
+			ringColorToggle = !ringColorToggle;
 		}
 		
 		for(int i = 0; i < listBot.size(); i++){
