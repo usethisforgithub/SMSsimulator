@@ -47,6 +47,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private double colAng;
 	private double tempAng = ang;
 	private int trajSize; 
+	private int uncoveredResilience;
 	private ArrayList<Arc> allArcs;
 	private ArrayList<Ring> ringList;
 	private Color[] colorArray = {Color.blue, Color.red, Color.green, Color.pink, Color.ORANGE, Color.cyan, Color.magenta, Color.LIGHT_GRAY};
@@ -64,7 +65,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		numCol = c;
 		ang = a;
 		tempDir = d;
-		
+		uncoveredResilience = 0;
 		
 		
 		//other initialize
@@ -312,17 +313,6 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		
 		
-	//	for(Arc e : allArcs){
-			//e.setColor(e.getRing().getColor());
-			//e.setColor(Color.red);
-			
-		//}
-		
-		//comments
-		
-		
-		
-		
 		
 		
 		
@@ -418,8 +408,32 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				}
 			}
 			
+			// ATTEMPT HEREEEEEEEEEEEEEEEEEEEEE (and few methods in other classes)
+			/* Have to check for multiple bots in a single ring (increases the resilience)
+			 * Have to check for changes per removal of bot
+			 */
+			//finds uncovered resilience
+			for(Robot rob : listBot)
+			{
+				for(Ring ring : ringList)
+				{
+					if(ring.getArcList().contains(rob.getTraj().whichArc(rob)))
+					{
+						ring.addBot();
+					}
+				}
+			}
+			int largestRingSize = 0;
+			for(Ring ring : ringList)
+			{
+				if(ring.numBots() > largestRingSize)
+				{
+					largestRingSize = ring.numBots();
+					uncoveredResilience = listBot.size() - 1 + largestRingSize;
+				}
+			}
 			
-			
+			//moves bots
 			if(!paused){
 			for(Robot e : listBot){
 				if(e.getTraj().getDirection() == -1){
@@ -438,6 +452,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				}
 		}
 		isDone = true;
+		
+		
 	}
 	
 	
@@ -544,11 +560,20 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			
 			//draws restart button
 			
-			g2.setColor(Color.RED);
+			g2.setColor(Color.magenta);
 			g2.fillRect(230, 820, 60, 60);
 			g2.setColor(Color.white);
 			g2.setFont(new Font("Callibri", Font.PLAIN, 12));
 			g2.drawString("New Grid", 235, 850);
+			
+			//draws resilience
+			
+			g2.setColor(Color.DARK_GRAY);
+			g2.fillRect(510, 820, 160, 60);
+			g2.setColor(Color.white);
+			g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+			g2.drawString("Uncovering Resilience: " + uncoveredResilience, 515, 840); 
+			g2.drawString("Isolation Resilience: ", 515, 860); 
 			
 			
 		

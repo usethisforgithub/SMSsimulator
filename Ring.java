@@ -6,11 +6,11 @@ public class Ring {
 	
 	//private static boolean[] colorArrayUsed = {false, false, false, false,false,false,false,false};
 	private ArrayList<Arc> arcList;
-	
+	private int numBots;
 	
 	public Ring(){
 		arcList = new ArrayList<Arc>();
-		
+		numBots = 0;
 	}
 	
 	public void addArc(Arc a){
@@ -24,5 +24,13 @@ public class Ring {
 	
 	public ArrayList<Arc> getArcList(){
 		return arcList;
+	}
+	
+	public void addBot(){
+		numBots++;
+	}
+	
+	public int numBots(){
+		return numBots;
 	}
 }
