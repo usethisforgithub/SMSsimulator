@@ -90,7 +90,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					tempDir = 1;
 				}
 				tempAng = 2 * Math.PI - ang;
-			} else {
+			}
+			else {
 				tempDir = d;
 				tempAng = ang;
 			}
@@ -111,7 +112,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				}
 
 				Trajectory tempTraj = new Trajectory(new Coordinate(50 + (trajSize / 2) + trajSize * (j - 1),
-						50 + (trajSize / 2) + trajSize * (i - 1)), tempDir, trajSize - 4, i, j);
+						50 + (trajSize / 2) + trajSize * (i - 1)), -tempDir, trajSize - 4, i, j);
 				Robot tempBot = new Robot(tempTraj, tempAng, j, i);
 				listTraj.add(tempTraj);
 				listBot.add(tempBot);
