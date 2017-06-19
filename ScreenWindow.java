@@ -597,7 +597,11 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			//toggles arc color
 			if(!ringColorToggle){
 				for(Arc ar : allArcs){
-					ar.setColor(Color.black);
+					if(uncoveringToggle && ar.getRing().getRobotList().size() == 0){
+						ar.setColor(Color.red);
+					}else{
+						ar.setColor(Color.black);
+					}
 				}
 				
 			}else{
