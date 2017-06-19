@@ -6,31 +6,36 @@ public class Ring {
 	
 	//private static boolean[] colorArrayUsed = {false, false, false, false,false,false,false,false};
 	private ArrayList<Arc> arcList;
-	private int numBots;
+	private ArrayList<Robot> robotList;
+	
 	
 	public Ring(){
 		arcList = new ArrayList<Arc>();
-		numBots = 0;
+		robotList = new ArrayList<Robot>();
+		
 	}
 	
 	public void addArc(Arc a){
 		arcList.add(a);
 	}
 	
-	
-	public String toString(){
-		return "num of arcs " + arcList.size();
+	public void addRobot(Robot r){
+		robotList.add(r);
 	}
 	
 	public ArrayList<Arc> getArcList(){
 		return arcList;
 	}
 	
-	public void addBot(){
-		numBots++;
+	public ArrayList<Robot> getRobotList(){
+		return robotList;
 	}
 	
-	public int numBots(){
-		return numBots;
+	public void resetRobotList(){
+		robotList = new ArrayList<Robot>();
+	}
+	
+	public String toString(){
+		return "num of arcs " + arcList.size();
 	}
 }

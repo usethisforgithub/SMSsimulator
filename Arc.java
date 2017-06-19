@@ -8,6 +8,7 @@ public class Arc {
 	private Ring ring;
 	
 	
+	
 	//possible flag
 	public static boolean compare(Arc a, Arc b){
 		if(a.getTraj().equals(b.getTraj()) && a.getQuadrant() == b.getQuadrant()){

@@ -36,7 +36,7 @@ public static void main(String[] args)
     myPanel.add(dField);
     
     int result = JOptionPane.showConfirmDialog(null, myPanel, 
-             "Please Enter Intializing Values", JOptionPane.OK_CANCEL_OPTION);
+             "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
     if (result == JOptionPane.OK_OPTION) {
     }
     
