@@ -14,10 +14,15 @@ public class Trajectory {
 	private Arc arc2;
 	private Arc arc3;
 	private Arc arc4;
+	private int gridX;
+	private int gridY;
 	
 	
-	public Trajectory(Coordinate v, int dir, int s)
+	public Trajectory(Coordinate v, int dir, int s, int x, int y)
 	{
+		
+		gridX = x;
+		gridY = y;
 		arc1 = new Arc(this,1);
 		arc2 = new Arc(this,2);
 		arc3 = new Arc(this,3);
@@ -169,6 +174,17 @@ public class Trajectory {
 		return sizeT;
 	}
 	
+	public int getGridX(){
+		return gridX;
+	}
+	
+	public int getGridY(){
+		return gridY;
+	}
+	
+	public ArrayList<Robot> getRobotList(){
+		return bots;
+	}
 	public void draw(Graphics2D g2)
 	{
 		g2.setColor(arc1.getColor());

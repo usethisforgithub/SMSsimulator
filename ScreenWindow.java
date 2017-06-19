@@ -40,6 +40,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	
 	//used to make trajectories
 	private int uncoveringResiliance;
+	private int isolationResiliance;
 	private int numRows;
 	private int numCol;
 	private double ang;
@@ -71,6 +72,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		//other initialize
 		ringList = new ArrayList<Ring>();
 		uncoveringResiliance = 0;
+		isolationResiliance = r + c -3;
 		
 		//resizing code
 		int horCircle = 700/numCol;
@@ -111,7 +113,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					tempDir = colDir;
 					tempAng = colAng;
 				}
-				Trajectory tempTraj = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-4);
+				
+				Trajectory tempTraj = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-4, i, j);
 				Robot tempBot = new Robot(tempTraj, tempAng,j,i);
 				listTraj.add(tempTraj);
 				listBot.add(tempBot);
@@ -349,20 +352,127 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		this.setResizable(false);
 		
+		
+		for(Trajectory e : listTraj){
+			System.out.println("row #: " + e.getGridX() + " col #: " +e.getGridY());
+		}
+		
 	}
 	
 	public void run(){
 		while(isRunning){
 			draw();
 			
+			
+			
+			
+			//updates isolation resiliance
+			int minIso = 999999999;
+			for(Robot e : listBot){
+				int tempResult = 0;
+				boolean control;
+				
+				
+				Trajectory trajTemp = e.getTraj();
+				if(trajTemp.getLeft() != null){
+				control = true;
+				}else{
+					control = false;
+				}
+				//checks to the left
+				while(control){
+					trajTemp = trajTemp.getLeft();
+					if(trajTemp.getRobotList().size() != 0){
+						tempResult++;
+					}
+					
+					if(trajTemp.getLeft() != null){
+						control = true;
+						}else{
+							control = false;
+						}
+				}
+				
+				trajTemp = e.getTraj();
+				if(trajTemp.getRight() != null){
+				control = true;
+				}else{
+					control = false;
+				}
+				//checks to the right
+				while(control){
+					trajTemp = trajTemp.getRight();
+					if(trajTemp.getRobotList().size() != 0){
+						tempResult++;
+					}
+					
+					if(trajTemp.getRight() != null){
+						control = true;
+						}else{
+							control = false;
+						}
+				}
+				
+				
+				trajTemp = e.getTraj();
+				if(trajTemp.getTop() != null){
+				control = true;
+				}else{
+					control = false;
+				}
+				//checks to the top
+				while(control){
+					trajTemp = trajTemp.getTop();
+					if(trajTemp.getRobotList().size() != 0){
+						tempResult++;
+					}
+					
+					if(trajTemp.getTop() != null){
+						control = true;
+						}else{
+							control = false;
+						}
+				}
+				
+				
+				trajTemp = e.getTraj();
+				if(trajTemp.getBottom() != null){
+				control = true;
+				}else{
+					control = false;
+				}
+				//checks to the bottom
+				while(control){
+					trajTemp = trajTemp.getBottom();
+					if(trajTemp.getRobotList().size() != 0){
+						tempResult++;
+					}
+					
+					if(trajTemp.getBottom() != null){
+						control = true;
+						}else{
+							control = false;
+						}
+				}
+				
+				if(tempResult < minIso){
+					minIso = tempResult;
+				}
+				
+				
+			}
+			isolationResiliance = minIso - 1;
+			
+			
+			
+			
+			//updates uncovering resiliance
 			for(Ring e : ringList){
 				e.resetRobotList();
 			}
 			for(Robot e : listBot){
 				e.getTraj().whichArc(e).getRing().addRobot(e);
 			}
-			
-			
 			int minBots =999999999;
 			for(Ring e : ringList){
 				if(e.getRobotList().size() < minBots){
@@ -370,6 +480,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				}
 			}
 			uncoveringResiliance = minBots-1;
+			
 			
 			//sets drones to sensing if they are at a critical point
 			for(Robot e : listBot){
@@ -543,7 +654,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			}
 			
 			
-			
+			System.out.println("Isolation resiliance: " + isolationResiliance);
 			//displays uncovering resiliance
 			g2.setColor(Color.black);
 			g2.setFont(new Font("Callibri", Font.PLAIN, 12));
