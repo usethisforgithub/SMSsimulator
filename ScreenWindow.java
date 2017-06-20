@@ -39,8 +39,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private boolean paused, droneLabelToggle, ringColorToggle, uncoveringToggle;
 	
 	//used to make trajectories
-	private int uncoveringResiliance;
-	private int isolationResiliance;
+	private int uncoveringResilience;
+	private int isolationResilience;
 	private int numRows;
 	private int numCol;
 	private double ang;
@@ -72,8 +72,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		//other initialize
 		ringList = new ArrayList<Ring>();
-		uncoveringResiliance = 0;
-		isolationResiliance = r + c -3;
+		uncoveringResilience = 0;
+		isolationResilience = r + c -3;
 		
 		//resizing code
 		int horCircle = 700/numCol;
@@ -460,13 +460,19 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 						}
 				}
 				
+				if(tempResult == 0){
+					e.setStarving(true);
+				}else{
+					e.setStarving(false);
+				}
+				
 				if(tempResult < minIso){
 					minIso = tempResult;
 				}
 				
 				
 			}
-			isolationResiliance = minIso - 1;
+			isolationResilience = minIso - 1;
 			
 			
 			
@@ -484,7 +490,11 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					minBots = e.getRobotList().size();
 				}
 			}
-			uncoveringResiliance = minBots-1;
+			uncoveringResilience = minBots-1;
+			
+			if(uncoveringResilience == 999999998){
+				uncoveringResilience = 0;
+			}
 			
 			
 			//sets drones to sensing if they are at a critical point
@@ -689,20 +699,20 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			}
 			
 			
-			System.out.println("Isolation resiliance: " + isolationResiliance);
+			System.out.println("Isolation resiliance: " + isolationResilience);
 			//draws uncovering resiliance button
 			if(!uncoveringToggle){
 			g2.setColor(Color.LIGHT_GRAY);
 			g2.fillRect(510, 820, 60, 60);
 			g2.setColor(Color.black);
 			g2.setFont(new Font("Callibri", Font.PLAIN, 12));
-			g2.drawString("UC: " + uncoveringResiliance, 520, 850);
+			g2.drawString("UC: " + uncoveringResilience, 520, 850);
 			}else{
 				g2.setColor(Color.DARK_GRAY);
 				g2.fillRect(510, 820, 60, 60);
 				g2.setColor(Color.white);
 				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
-				g2.drawString("UC: " + uncoveringResiliance, 520, 850);
+				g2.drawString("UC: " + uncoveringResilience, 520, 850);
 			}
 			//draws ID button
 			if(droneLabelToggle){

@@ -14,6 +14,7 @@ public class Robot {
 	private int startingX;
 	private int startingY;
 	private boolean labelToggle;
+	private boolean starving;
 	
 	
 	public Robot( Trajectory traj, double ang, int x, int y)
@@ -26,6 +27,7 @@ public class Robot {
 		sizeR = t.getSize()/5;
 		startingX = x;
 		startingY = y;
+		starving = false;
 	}
 	
 	public void setFlipped(boolean h){
@@ -61,6 +63,15 @@ public class Robot {
 		return sensing;
 	}
 	
+	public boolean isStarving(){
+		return starving;
+	}
+	
+	public void setStarving(boolean s){
+		starving = s;
+	}
+
+	
 	public boolean contains(Coordinate c){
 		double centerX = t.getVertex().geti() + t.getSize()/2*Math.cos(angle);
 		double centerY = t.getVertex().getj() - t.getSize()/2*Math.sin(angle);
@@ -80,13 +91,13 @@ public class Robot {
 		
 		
 		
-		//if(sensing){
-		//	g2.setColor(Color.yellow);
-		//}else{
-		//	g2.setColor(Color.black);
-		//}
-		g2.setColor(Color.black);
-		//g2.fill((Shape) Color.black);
+		if(starving){
+			g2.setColor(Color.yellow);
+		}else{
+			g2.setColor(Color.black);
+		}
+		//g2.setColor(Color.black);
+	
 		g2.fill(new Ellipse2D.Double(t.getVertex().geti() + t.getSize()/2*Math.cos(angle) - sizeR/2, t.getVertex().getj() - t.getSize()/2*Math.sin(angle) - sizeR/2, sizeR, sizeR));//t.getSize()*Math.cos(angle)
 	
 		g2.setColor(Color.white);
