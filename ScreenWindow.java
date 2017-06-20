@@ -115,7 +115,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					tempAng = colAng;
 				}
 				
-				Trajectory tempTraj = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),tempDir, trajSize-4, i, j);
+				Trajectory tempTraj = new Trajectory(new Coordinate(50+(trajSize/2) + trajSize*(j-1),50+(trajSize/2)+trajSize*(i-1)),-tempDir, trajSize-4, i, j);
 				Robot tempBot = new Robot(tempTraj, tempAng,j,i);
 				listTraj.add(tempTraj);
 				listBot.add(tempBot);
@@ -174,6 +174,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				
 				//places the robot
 				double quadAngle = -1111;
+				
 				if(e.getQuadrant() == 1){
 					quadAngle = Math.PI/4;
 				}
@@ -189,6 +190,9 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				if(e.getQuadrant() == 4){
 					quadAngle = 7*Math.PI/4;
 				}
+				
+				
+				
 				Robot robot = new Robot(e.getTraj(),quadAngle, 1,1);
 				boolean unfinished = true;
 				
@@ -218,7 +222,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					//if drone is at left position
 					if( (Utilities.radianEq(robot.getAngle(),Math.PI ) ||  Utilities.radianEq(robot.getAngle(),-Math.PI)  ) && !robot.getFlipped()){
 						//if no drone to the left
-						if(robot.getTraj().getLeft() != null &&(!robot.getTraj().getLeft().hasRightCrit())){
+						if(robot.getTraj().getLeft() != null ){
 							
 							robot.getTraj().removeBot(robot);
 							robot.setTrajectory(robot.getTraj().getLeft());
@@ -233,7 +237,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					//if drone is at right
 					if( (Utilities.radianEq(robot.getAngle(),2*Math.PI ) ||  Utilities.radianEq(robot.getAngle(),-2*Math.PI  )||  Utilities.radianEq(robot.getAngle(),0 )) && !robot.getFlipped()){
 						//if no drone to the right
-						if(robot.getTraj().getRight() != null &&(!robot.getTraj().getRight().hasLeftCrit())){
+						if(robot.getTraj().getRight() != null ){
 							
 							robot.getTraj().removeBot(robot);
 							robot.setTrajectory(robot.getTraj().getRight());
@@ -246,7 +250,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					
 					if( (Utilities.radianEq(robot.getAngle(), (Math.PI/2)) ||  Utilities.radianEq(robot.getAngle(),-3*(Math.PI/2))) && !robot.getFlipped()){
 						//if no drone to the top
-						if(robot.getTraj().getTop() != null &&(!robot.getTraj().getTop().hasBottomCrit())){
+						if(robot.getTraj().getTop() != null ){
 							
 							robot.getTraj().removeBot(robot);
 							robot.setTrajectory(robot.getTraj().getTop());
@@ -259,7 +263,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 					
 					if( (Utilities.radianEq(robot.getAngle(), -(Math.PI/2)) ||  Utilities.radianEq(robot.getAngle(), 3*(Math.PI/2))) && !robot.getFlipped()){
 						//if no drone to the bottom
-						if(robot.getTraj().getBottom() != null &&(!robot.getTraj().getBottom().hasTopCrit())){
+						if(robot.getTraj().getBottom() != null ){
 							
 							robot.getTraj().removeBot(robot);
 							robot.setTrajectory(robot.getTraj().getBottom());
@@ -287,7 +291,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				robot.setAngle(Utilities.coterminal(robot.getAngle()));
 				
 			}
-				
+				robot.getTraj().removeBot(robot);
 				ringList.add(tempRing);
 				
 			}
