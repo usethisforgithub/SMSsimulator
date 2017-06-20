@@ -106,7 +106,12 @@ public class Robot {
 	
 		g2.fill(new Ellipse2D.Double(t.getVertex().geti() + t.getSize()/2*Math.cos(angle) - sizeR/2, t.getVertex().getj() - t.getSize()/2*Math.sin(angle) - sizeR/2, sizeR, sizeR));//t.getSize()*Math.cos(angle)
 	
-		g2.setColor(Color.white);
+		if(starving && isoToggle){
+			g2.setColor(Color.black);
+		}else{
+			g2.setColor(Color.white);
+		}
+		
 		Font font = new Font("Callibri", Font.PLAIN, sizeR/3);//font.getStringBounds("Waller's Triangle Game", g2.getFontRenderContext()).getWidth())/2)
 		
 		g2.setFont(font);
