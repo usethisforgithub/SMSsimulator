@@ -36,7 +36,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	
 	private ArrayList<Trajectory> listTraj = new ArrayList<Trajectory>();
 	private ArrayList<Robot> listBot = new ArrayList<Robot>();
-	private boolean paused, droneLabelToggle, ringColorToggle, uncoveringToggle;
+	private boolean paused, droneLabelToggle, ringColorToggle, uncoveringToggle, isolationToggle;
 	
 	//used to make trajectories
 	private int uncoveringResilience;
@@ -60,6 +60,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		//user inputs
 		paused = true;
+		isolationToggle = false;
 		uncoveringToggle = false;
 		ringColorToggle = false;
 		droneLabelToggle = false;
@@ -374,6 +375,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			//updates isolation resiliance
 			int minIso = 999999999;
 			for(Robot e : listBot){
+				e.setIsolationToggle(isolationToggle);
 				int tempResult = 0;
 				boolean control;
 				
@@ -700,6 +702,24 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			
 			
 			System.out.println("Isolation resiliance: " + isolationResilience);
+			
+			//draws isolation resilience button
+			if(!isolationToggle){
+				g2.setColor(Color.LIGHT_GRAY);
+				g2.fillRect(580, 820, 60, 60);
+				g2.setColor(Color.black);
+				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+				g2.drawString("ISO: " + uncoveringResilience, 590, 850);
+				}else{
+					g2.setColor(Color.DARK_GRAY);
+					g2.fillRect(580, 820, 60, 60);
+					g2.setColor(Color.white);
+					g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+					g2.drawString("ISO: " + uncoveringResilience, 590, 850);
+				}
+			
+			
+			
 			//draws uncovering resiliance button
 			if(!uncoveringToggle){
 			g2.setColor(Color.LIGHT_GRAY);
@@ -861,6 +881,11 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		//if click is inside the button, toggles pause
 		if((arg0.getX() >= 370 && arg0.getX() <= 430) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
 			paused = !paused;
+		}
+		
+		//isolation toggle
+		if((arg0.getX() >= 580 && arg0.getX() <= 640) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
+			isolationToggle = !isolationToggle;
 		}
 		
 		//uncovering toggle

@@ -15,6 +15,7 @@ public class Robot {
 	private int startingY;
 	private boolean labelToggle;
 	private boolean starving;
+	private boolean isoToggle;
 	
 	
 	public Robot( Trajectory traj, double ang, int x, int y)
@@ -28,6 +29,11 @@ public class Robot {
 		startingX = x;
 		startingY = y;
 		starving = false;
+		isoToggle = false;
+	}
+	
+	public void setIsolationToggle(boolean b){
+		isoToggle = b;
 	}
 	
 	public void setFlipped(boolean h){
@@ -91,7 +97,7 @@ public class Robot {
 		
 		
 		
-		if(starving){
+		if(starving && isoToggle){
 			g2.setColor(Color.yellow);
 		}else{
 			g2.setColor(Color.black);
