@@ -51,7 +51,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	private int trajSize; 
 	private ArrayList<Arc> allArcs;
 	private ArrayList<Ring> ringList;
-	private Color[] colorArray = {Color.blue, Color.green, Color.pink, Color.ORANGE, Color.cyan, Color.magenta, Color.LIGHT_GRAY};
+	private Color[] colorArray = {Color.blue, Color.green,  Color.ORANGE,Color.pink, Color.cyan, Color.magenta, Color.LIGHT_GRAY};
 	
 	public ScreenWindow(int r, int c, int d, double a){
 		super();
@@ -60,8 +60,8 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		
 		//user inputs
 		paused = true;
-		isolationToggle = false;
-		uncoveringToggle = false;
+		isolationToggle = true;
+		uncoveringToggle = true;
 		ringColorToggle = false;
 		droneLabelToggle = false;
 		numRows = r;
@@ -359,9 +359,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		this.setResizable(false);
 		
 		
-		for(Trajectory e : listTraj){
-			System.out.println("row #: " + e.getGridX() + " col #: " +e.getGridY());
-		}
+		
 		
 	}
 	
@@ -701,21 +699,19 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			}
 			
 			
-			System.out.println("Isolation resiliance: " + isolationResilience);
-			
 			//draws isolation resilience button
 			if(!isolationToggle){
 				g2.setColor(Color.LIGHT_GRAY);
 				g2.fillRect(580, 820, 60, 60);
 				g2.setColor(Color.black);
 				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
-				g2.drawString("ISO: " + uncoveringResilience, 590, 850);
+				g2.drawString("ISO", 590, 850);
 				}else{
 					g2.setColor(Color.DARK_GRAY);
 					g2.fillRect(580, 820, 60, 60);
 					g2.setColor(Color.white);
 					g2.setFont(new Font("Callibri", Font.PLAIN, 12));
-					g2.drawString("ISO: " + uncoveringResilience, 590, 850);
+					g2.drawString("ISO" , 590, 850);
 				}
 			
 			
@@ -726,13 +722,13 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 			g2.fillRect(510, 820, 60, 60);
 			g2.setColor(Color.black);
 			g2.setFont(new Font("Callibri", Font.PLAIN, 12));
-			g2.drawString("UC: " + uncoveringResilience, 520, 850);
+			g2.drawString("UC", 520, 850);
 			}else{
 				g2.setColor(Color.DARK_GRAY);
 				g2.fillRect(510, 820, 60, 60);
 				g2.setColor(Color.white);
 				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
-				g2.drawString("UC: " + uncoveringResilience, 520, 850);
+				g2.drawString("UC", 520, 850);
 			}
 			//draws ID button
 			if(droneLabelToggle){
