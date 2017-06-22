@@ -36,27 +36,29 @@ public class Driver {
 		myPanel.add(new JLabel("in radians between (0.00 - 6.28):"));
 		myPanel.add(dField);
 
-		int result = JOptionPane.showConfirmDialog(null, myPanel, " Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+		int result = JOptionPane.showConfirmDialog(null, myPanel, " Enter Values For New SCS Simulation", JOptionPane.OK_CANCEL_OPTION);
 		
 		if (result == JOptionPane.OK_OPTION) {
-		}
+			String temp1 = aField.getText();
+			String temp2 = bField.getText();
+			String temp3 = cField.getText();
+			String temp4 = dField.getText();
 
-		String temp1 = aField.getText();
-		String temp2 = bField.getText();
-		String temp3 = cField.getText();
-		String temp4 = dField.getText();
-
-		if (temp1 != "" && temp2 != "" && temp3 != "" && temp4 != "") {
-			int r = Integer.parseInt(temp1);
-			int c = Integer.parseInt(temp2);
-			int d = Integer.parseInt(temp3);
-			double a = Double.parseDouble(temp4);
-			ScreenWindow window = new ScreenWindow(r, c, d, a);
-			new Thread(window).start();
+			if (!temp1.equals("") && !temp2.equals("") && !temp3.equals("") && !temp4.equals("")) {
+				int r = Integer.parseInt(temp1);
+				int c = Integer.parseInt(temp2);
+				int d = Integer.parseInt(temp3);
+				double a = Double.parseDouble(temp4);
+				ScreenWindow window = new ScreenWindow(r, c, d, a);
+				new Thread(window).start();
+			}
+			else {
+				System.out.println("One or more fields was left empty. New SCS simulation was not started.");
+			}
 		}
-		else {
-			System.out.println("One or more fields was left empty, so launch was aborted");
-		}
+		
+		
+		
 
 	}
 }
