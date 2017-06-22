@@ -15,28 +15,30 @@ public static void main(String[] args)
     JTextField dField = new JTextField(5);
     
     JPanel myPanel = new JPanel();
-    myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-    
-    myPanel.add(new JLabel("Enter # of rows:"));
-    myPanel.add(aField);
-    
-    myPanel.add(Box.createVerticalStrut(15));
-    
-    myPanel.add(new JLabel("Enter # of columns:"));
-    myPanel.add(bField);
+	myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
 
-    myPanel.add(Box.createVerticalStrut(15));
-    
-    myPanel.add(new JLabel("Enter direction of first trajectory (-1, 1):"));
-    myPanel.add(cField);
+	myPanel.add(new JLabel("Enter number of rows:"));
+	myPanel.add(aField);
 
-    myPanel.add(Box.createVerticalStrut(15));
-    
-    myPanel.add(new JLabel("Angle of first drone(Radians 0 - 6.28):"));
-    myPanel.add(dField);
+	myPanel.add(Box.createVerticalStrut(15));
+
+	myPanel.add(new JLabel("Enter number of columns:"));
+	myPanel.add(bField);
+
+	myPanel.add(Box.createVerticalStrut(15));
+
+	myPanel.add(new JLabel("Enter initial direction of first trajectory"));
+	myPanel.add(new JLabel("-1 (clockwise) or 1 (counterclockwise):"));
+	myPanel.add(cField);
+
+	myPanel.add(Box.createVerticalStrut(15));
+
+	myPanel.add(new JLabel("Enter initial angle of first drone"));
+	myPanel.add(new JLabel("in radians between (0.00 - 6.28):"));
+	myPanel.add(dField);
     
     int result = JOptionPane.showConfirmDialog(null, myPanel, 
-             "Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+             " Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
     if (result == JOptionPane.OK_OPTION) {
     }
     
