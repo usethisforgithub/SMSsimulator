@@ -36,7 +36,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 	
 	private ArrayList<Trajectory> listTraj = new ArrayList<Trajectory>();
 	private ArrayList<Robot> listBot = new ArrayList<Robot>();
-	private boolean paused, droneLabelToggle, ringColorToggle, uncoveringToggle, isolationToggle;
+	private boolean paused, droneLabelToggle, ringColorToggle, uncoveringToggle, isolationToggle, rangeToggle;
 	
 	//used to make trajectories
 	private int uncoveringResilience;
@@ -64,6 +64,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		uncoveringToggle = false;
 		ringColorToggle = false;
 		droneLabelToggle = false;
+		rangeToggle = false;
 		numRows = r;
 		numCol = c;
 		ang = a;
@@ -730,6 +731,7 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
 				g2.drawString("UC", 520, 850);
 			}
+			
 			//draws ID button
 			if(droneLabelToggle){
 				g2.setColor(Color.DARK_GRAY);
@@ -759,6 +761,22 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 				g2.setColor(Color.black);
 				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
 				g2.drawString("Rings on", 305, 850);
+			}
+			
+			//draws range button
+			
+			if(rangeToggle){
+				g2.setColor(Color.BLUE);
+				g2.fillRect(160, 820, 60, 60);
+				g2.setColor(Color.white);
+				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+				g2.drawString("Ranges", 165, 850);
+			}else{
+				g2.setColor(Color.cyan);
+				g2.fillRect(160, 820, 60, 60);
+				g2.setColor(Color.black);
+				g2.setFont(new Font("Callibri", Font.PLAIN, 12));
+				g2.drawString("Ranges", 165, 850);
 			}
 			
 			//draws restart button
@@ -897,6 +915,14 @@ public class ScreenWindow extends Frame implements WindowListener, Runnable, Key
 		//drone label toggle
 		if((arg0.getX() >= 300 && arg0.getX() <= 360) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
 			ringColorToggle = !ringColorToggle;
+		}
+		
+		//drone range toggle
+		if((arg0.getX() >= 160 && arg0.getX() <= 220) && (arg0.getY() >= 820 && arg0.getY() <= 880)){
+			rangeToggle = !rangeToggle;
+			for(Robot d : listBot){
+				d.setShowRange(rangeToggle);
+			}
 		}
 		
 		for(int i = 0; i < listBot.size(); i++){
