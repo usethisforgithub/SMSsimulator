@@ -16,20 +16,27 @@ public class Robot {
 	private boolean labelToggle;
 	private boolean starving;
 	private boolean isoToggle;
-	
+	private boolean showRange;
+	private int wifiRange = 100;
 	
 	public Robot( Trajectory traj, double ang, int x, int y)
 	{
+		showRange = false;
 		labelToggle = false;
 		hasFlipped = false;
 		sensing = false;
 		t = traj;
 		angle = ang;
 		sizeR = t.getSize()/5;
+		wifiRange = sizeR/4;
 		startingX = x;
 		startingY = y;
 		starving = false;
 		isoToggle = false;
+	}
+	
+	public void setShowRange(boolean b){
+		showRange = b;
 	}
 	
 	public void setIsolationToggle(boolean b){
@@ -98,7 +105,7 @@ public class Robot {
 		
 		
 		if(starving && isoToggle){
-			g2.setColor(Color.yellow);
+			g2.setColor(Color.red);
 		}else{
 			g2.setColor(Color.black);
 		}
@@ -118,6 +125,11 @@ public class Robot {
 		//g2.setStroke(new BasicStroke(sizeR/4));
 		if(labelToggle){
 		g2.drawString(startingX +","+startingY, (int)(t.getVertex().geti() + t.getSize()/2*Math.cos(angle)-sizeR/6), (int)(t.getVertex().getj() - t.getSize()/2*Math.sin(angle)+sizeR/6));
+		}
+		
+		if(showRange){
+			g2.setColor(Color.cyan);
+			g2.draw(new Ellipse2D.Double(t.getVertex().geti() + t.getSize()/2*Math.cos(angle) - sizeR/2 - wifiRange/2, t.getVertex().getj() - t.getSize()/2*Math.sin(angle) - sizeR/2 - wifiRange/2, sizeR + wifiRange, sizeR + wifiRange));//t.getSize()*Math.cos(angle)
 		}
 	
 	}
